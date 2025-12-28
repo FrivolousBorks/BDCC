@@ -1189,6 +1189,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Game/InteractionSystem/PawnTypeBase.gd"
 }, {
+"base": "FluidProduction",
+"class": "PeeProduction",
+"language": "GDScript",
+"path": "res://Player/FluidProduction/PeeProduction.gd"
+}, {
 "base": "Object",
 "class": "Perk",
 "language": "GDScript",
@@ -2061,6 +2066,7 @@ _global_script_class_icons={
 "PawnInteractionBase": "",
 "PawnReactions": "",
 "PawnTypeBase": "",
+"PeeProduction": "",
 "Perk": "",
 "PerkBase": "",
 "Personality": "",
