@@ -222,6 +222,195 @@ func _run():
 		saynn("Still, they begin picking up the dirty floor chips and eating them.")
 
 		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "2"):
+		saynn("As you approach the tentacles, you see them grabbing the handle of the fridge and opening it!")
+
+		saynn("They then look inside.. and see a whole roasted chicken just waiting there for them.")
+
+		addButton("Allow it", "Allow them to eat the chicken!", "2_allow")
+		addButton("Deny", "Prevent them from eating the chicken!", "2_deny")
+	if(state == "2_allow"):
+		saynn("Some chicken isn't gonna hurt, the tentacles need all the protein they can get.")
+
+		if (_tentacles.agility >= 5):
+			saynn("You just watch as the tentacles pull the roasted chicken out.. and then easily rip it apart before squeezing and absorbing the meat. Wow.")
+
+			saynn("They sure got strong.")
+
+		elif (_tentacles.agility >= 3):
+			saynn("You just watch as the tentacles carefully pull the roasted chicken out and hold it above the floor. Multiple tentacles curl around the chicken's wings and legs.. before proceeding to try to tear it apart.")
+
+			saynn("It takes some time but eventually they manage to do so, ripping the limbs off before absorbing all the meat.")
+
+		else:
+			saynn("You just watch as the tentacles try to awkwardly pull the roasted chicken out. It takes quite a few tentacles to hold it above the floor.. while the rest dig into the meat and begin absorbing it.")
+
+			saynn("Some time later, they finally finished their meal!")
+
+		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "2_deny"):
+		saynn("You run up to the fridge and close it shut before the tentacles have a chance to grab anything!")
+
+		saynn("[say=pc]Nope, you're not eating this.[/say]")
+
+		if (_tentacles.agility >= 7):
+			saynn("The many tentacles stare at you.. intently.")
+
+			_tentacles.talk("You can't stop us, why are you trying.")
+			saynn("A few tendrils begin reaching out.. but you slap them away.. again and again.. until one of them catches your wrist and holds it in place.")
+
+			saynn("The way it's advancing towards you.. makes you think that it's about to do something. The tentacles start curling.. but not around you.. around the fridge.")
+
+			saynn("The monster suddenly lifts it above the floor.. and relocates it so that your body is no longer blocking it.")
+
+			saynn("[say=pc]Wow.[/say]")
+
+			saynn("That's one way to solve a problem..")
+
+			saynn("It looks like the tentacles lost interest in the chicken after this stunt.. they just wanted to do this.")
+
+		elif (_tentacles.agility >= 5):
+			saynn("The many tentacles stare at you.. intently.")
+
+			_tentacles.talk("We do not wish to harm you.")
+			saynn("A few tendrils begin reaching out.. but you slap them away.. again and again.. until one of them catches your wrist and holds it in place.")
+
+			saynn("You try to use your other arm.. but the tentacles catch that one too..")
+
+			saynn("You try to kick the tentacles.. but your leg quickly gets bound by the tendrils as well.")
+
+			saynn("And so.. you're standing on one leg.. completely helpless.")
+
+			saynn("[say=pc]Alright, you win. The chicken is yours.[/say]")
+
+			saynn("Hearing that.. the monster just lets you go.. and then slithers away.")
+
+		else:
+			saynn("The many tentacles stare at you.. A few try to reach out but they're easy to deflect.")
+
+			_tentacles.talk("We have a wish for nutrients.")
+			saynn("[say=pc]I don't want you to eat it, okay? Maybe you want something else?[/say]")
+
+			saynn("Eventually, the monster gives up and just slithers away.")
+
+		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "3"):
+		saynn("As you approach the tentacles, you see them grabbing the handle of the fridge and opening it!")
+
+		saynn("They then look inside.. and notice a raw, uncooked stake. And, for some reason, they want it.")
+
+		saynn("Maybe letting them feel what real meat tastes like isn't the best idea..")
+
+		addButton("Allow it", "Allow them to eat the stake!", "3_allow")
+		addButton("Deny", "Prevent them from eating the meat!", "3_deny")
+	if(state == "3_allow"):
+		saynn("..or maybe letting them get familiar with the taste of meat is exactly what you want.")
+
+		if (_tentacles.agility >= 5):
+			saynn("You just watch as the tentacles grab the stake.. and then easily rip it apart before squeezing and absorbing all the juices and blood. Wow. They didn't even leave any bones.")
+
+		elif (_tentacles.agility >= 3):
+			saynn("You just watch as the tentacles grab the stake.. and then dig into the meat with its hungry pointy tips, squeezing all the juices and blood out of it before absorbing it.")
+
+		else:
+			saynn("You just watch as the tentacles try to awkwardly pull the stake out. It takes quite a few tentacles to hold it above the floor.. while the rest dig into the meat and begin absorbing it.")
+
+			saynn("Some time later, they finally finished their meal! The blood is still dripping from the tips..")
+
+		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "3_deny"):
+		saynn("You run up to the fridge and close it shut before the tentacles have a chance to grab anything!")
+
+		saynn("[say=pc]Nope, you're not eating this.[/say]")
+
+		if (_tentacles.agility >= 7):
+			saynn("The many tentacles stare at you.. intently.")
+
+			_tentacles.talk("You can't stop us, why are you trying.")
+			saynn("A few tendrils begin reaching out.. but you slap them away.. again and again.. until one of them catches your wrist and holds it in place.")
+
+			saynn("The way it's advancing towards you.. makes you think that it's about to do something. The tentacles start curling.. but not around you.. around the fridge.")
+
+			saynn("The monster suddenly lifts it above the floor.. and relocates it so that your body is no longer blocking it.")
+
+			saynn("[say=pc]Wow.[/say]")
+
+			saynn("That's one way to solve a problem..")
+
+			saynn("It looks like the tentacles lost interest in the meat after this stunt.. they just wanted to do this.")
+
+		elif (_tentacles.agility >= 5):
+			saynn("The many tentacles stare at you.. intently.")
+
+			_tentacles.talk("We do not wish to harm you.")
+			saynn("A few tendrils begin reaching out.. but you slap them away.. again and again.. until one of them catches your wrist and holds it in place.")
+
+			saynn("You try to use your other arm.. but the tentacles catch that one too..")
+
+			saynn("You try to kick the tentacles.. but your leg quickly gets bound by the tendrils as well.")
+
+			saynn("And so.. you're standing on one leg.. completely helpless.")
+
+			saynn("[say=pc]Alright, you win. The meat is yours.[/say]")
+
+			saynn("Hearing that.. the monster just lets you go.. and then slithers away.")
+
+		else:
+			saynn("The many tentacles stare at you.. A few try to reach out but they're easy to deflect.")
+
+			_tentacles.talk("We have a wish for nutrients.")
+			saynn("[say=pc]I don't want you to eat it, okay? Maybe you want something else?[/say]")
+
+			saynn("Eventually, the monster gives up and just slithers away.")
+
+		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "4"):
+		saynn("As you approach the tentacles, you see them grabbing the handle of the fridge and opening it!")
+
+		saynn("They then look inside.. and notice a 'milk' bottle. It has no label.. but you're pretty sure that it's more than just milk.")
+
+		saynn("For some reason, they really wanna empty that bottle.")
+
+		addButton("Allow it", "Allow them to drink the milk!", "4_allow")
+		addButton("Deny", "Prevent them from eating the meat!", "4_deny")
+	if(state == "4_allow"):
+		saynn("What the heck, why not.")
+
+		saynn("You just watch as the tentacles grab the bottle.. and open it with a precise flick of a tentacle. After that, the monster just pours this milk all over itself, letting the skin of its many tendrils absorb the fluid.")
+
+		saynn("As the milk gets absorbed, a different fluid replaces it. The tentacles sway slowly as they become all shiny and drippy..")
+
+		if (_tentacles.lust >= 5):
+			saynn("They're extremely lusty already.. but it looks like they just got even more horny.")
+
+		elif (_tentacles.lust >= 3):
+			saynn("Whatever it is, it sure makes them look more.. lusty.")
+
+		else:
+			saynn("It sure made them a bit more.. inviting.")
+
+		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "4_deny"):
+		saynn("You run to the fridge and close it before the tentacles have a chance to grab the milk bottle.")
+
+		saynn("[say=pc]Nope, you're not drinking that stuff. Don't even think about it.[/say]")
+
+		if (_tentacles.lust >= 6):
+			saynn("The tentacles rub you in sensitive places to try to make you move. You let out a few moans.. but stay still.")
+
+			saynn("Eventually, they give up and move on.")
+
+		elif (_tentacles.lust >= 3):
+			saynn("The tentacles gently stroke your hips, inviting you to move aside. Despite all of that, you stand still.")
+
+			saynn("Eventually, they give up and move on.")
+
+		else:
+			saynn("The tentacles poke your hips a few times.. but you just stand still.")
+
+			saynn("Eventually, they give up and move on.")
+
+		addButton("Continue", "See what happens next", "endthescene")
 
 func _react(_action: String, _args):
 	var _tentacles:PlayerSlaveryTentacles = GM.main.PS
@@ -258,5 +447,23 @@ func _react(_action: String, _args):
 			setState("1_yoink_angry")
 			return
 		_tentacles.train(_tentacles.STAT_AGILITY)
+
+	if(_action == "2_allow"):
+		_tentacles.train(_tentacles.STAT_AGILITY)
+
+	if(_action == "2_deny"):
+		_tentacles.trainNothing()
+
+	if(_action == "3_allow"):
+		_tentacles.train(_tentacles.STAT_ANGER)
+
+	if(_action == "3_deny"):
+		_tentacles.trainNothing()
+
+	if(_action == "4_allow"):
+		_tentacles.train(_tentacles.STAT_LUST)
+
+	if(_action == "4_deny"):
+		_tentacles.trainNothing()
 
 	setState(_action)
