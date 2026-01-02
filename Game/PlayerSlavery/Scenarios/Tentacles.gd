@@ -85,6 +85,8 @@ const EVENT_PLAY = 3
 
 var daysNormal:int = 0
 
+var didRubLustEvent:bool = false
+
 # mood
 var eventNeed:int = 0
 var lastEventType:int = -1

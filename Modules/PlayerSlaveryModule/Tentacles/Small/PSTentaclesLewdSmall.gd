@@ -55,8 +55,23 @@ func _run():
 
 			saynn("They're dripping juices and pulsing with warm, slick tension..")
 
-		if (_tentacles.lust <= 2):
+		if (!_tentacles.didRubLustEvent):
 			addButton("Rub", "Gently rub the tentacles", "0")
+		else:
+			if (_tentacles.lust <= 2):
+				addButton("Stroke tentacle", "Pick one of the tentacles and give it a stroke!", "1")
+			if (_tentacles.lust <= 2):
+				addButton("Kiss tentacle", "Pick one of the tentacles and kiss it!", "2")
+			if (_tentacles.lust >= 2 && _tentacles.lust <= 5):
+				addButton("Let it explore you", "Let the tentacle monster explore your body!", "3")
+			if (_tentacles.lust >= 3):
+				addButton("Bondage", "Let the tentacles play with you and tie you up!", "4")
+			if (_tentacles.lust >= 4):
+				addButton("Light choking", "Let the tentacles choke you a little!", "5")
+			if (_tentacles.lust >= 5):
+				addButton("Stroke them!", "Stroke the tentacles like a slut and see what happens!", "6")
+			if (_tentacles.lust >= 5):
+				addButton("Deep kiss", "Kiss one of the tentacles and let it stretch your throat a bit..", "7")
 		addButton("Shoo!", "Tell the tentacles to stop", "say_shoo")
 	if(state == "say_shoo"):
 		saynn("You shoo the tentacle away from you.")
@@ -202,6 +217,96 @@ func _run():
 		saynn("You rub your neck.. that is now a bit bruised from all the choking. Still, worth it.")
 
 		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "6"):
+		saynn("The tentacles are swaying around you.. and that makes the air thick with some kind of sweet scent. The tendrils are shiny with a thin, slick sheen.")
+
+		saynn("Watching them.. smelling them.. A reckless, hungry impulse takes you. Without a word, you get down to your knees before them.")
+
+		saynn("You reach out, your hands grabbing two of the nearest tentacles, your digits gripping around their tips while they pulse eagerly in your grasp. You begin to stroke them.. slowly.. following the curvature from their thick bases to their pointy end, your thumbs rubbing circles into their slick skin. A low, shivering shudder runs through the whole mass of them.")
+
+		saynn("[say=pc]C'mon, I can take more..[/say]")
+
+		saynn("One of the thin tentacles presses its dripping tip against the side of your neck, leaving a cool, wet trail as it glides up to your jawline. Another one finds its way between your {pc.breasts}, rubbing softly against them. You gasp, your focus divided between the ones in your hands and the ones beginning to explore.")
+
+		saynn("The thin tentacle becomes very bold and is now brushing against your lips. You don't hesitate and take the slick, pointy tip into your mouth. The taste reminds you of honey a bit. It doesn't thrust, just pulses gently as you start sucking on it, your tongue sliding around it.")
+
+		saynn("[say=pc]Mmh..[/say]")
+
+		if (GM.pc.hasReachableVagina()):
+			saynn("Another tentacle finds its way between your thighs, now rubbing against your slick pussy, catching your wetness onto itself and sharing its juices back.")
+
+		elif (GM.pc.hasReachablePenis()):
+			saynn("Another tentacle finds its way between your thighs, now rubbing against your dick, catching your pre onto itself and coating your member with its juices instead.")
+
+		elif (GM.pc.isWearingChastityCage()):
+			saynn("Another tentacle finds its way between your thighs, now rubbing against your chastity cage, catching the pre that your locked dick is leaking and coating your little cage with its juices instead.")
+
+		else:
+			saynn("Another tentacles finds its way between your thighs, now rubbing against your tailhole, coating it with a layer of juices.")
+
+		saynn("Your chest, your crotch, your mouth, your hands.. You're surrounded by tentacles, stroking or being stroked in return. The air fills with soft, wet sounds and your own muffled moans around the green tip in your mouth. Their movements grow more urgent.. their pulsing becoming faster.. all the while you stroke them faster.")
+
+		saynn("It doesn't take long before you feel something building.. some kind of tension in the tentacles. They all begin to throb in unison..")
+
+		addButton("Orgasm", "See what happens next", "6_cum")
+	if(state == "6_cum"):
+		saynn("They don't just cum.. They give you a whole shower.")
+
+		saynn("[say=pc]Mmmph..![/say]")
+
+		saynn("With a series of shuddering convulsions, the tentacles that you were stroking jerk in your grasp. The one in your mouth pushes a little deeper as it pulses.. before releasing a flood of warm, sweet nectar onto your tongue and down your throat.")
+
+		saynn("At the same time, the one against your chest arches and spurts, painting your neck, your chin and your {pc.breasts} in streaks of that shiny honey-like cum..")
+
+		saynn("More join, throbbing and releasing, showering your face, your hair, your kneeling body in their sticky, sweet juices.. Your own orgasm overwhelms you, making you squirm and throw your head back, your busy lips producing hot, muffled moans.")
+
+		saynn("[say=pc]Mhh-h~..[/say]")
+
+		saynn("After they're done getting you drenched and trembling.. the tentacles slowly retract, leaving you on your knees, panting, covered in juices. They sway gently above you, their lust satisfied.. for now.")
+
+		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "7"):
+		saynn("You look at the thick, shiny tentacle swaying before you.. A little bead of juices gathers at its tip and hangs from it for a bit.. before dripping to the floor. A sudden desire heats you up..")
+
+		saynn("[say=pc]Come here.[/say]")
+
+		saynn("You don't just touch it with your hands.. instead, you reach towards it and press your lips to its slick, warm surface. It tastes faintly of honey nectar.. it makes you wanna continue.")
+
+		saynn("You leave another little kiss and then open your mouth, letting your tongue slide out to lap at the taste.. and to tease the sensitive tip.")
+
+		saynn("Feeling a bit more bold, you catch the tip of your lips and let a small part of it into your mouth, your tongue now licking around it and playing with it.")
+
+		saynn("That deep kiss triggers something..")
+
+		saynn("With a sudden, eager push, the tentacle slides further past your lips and teeth, over your tongue. You gasp.. but you don't pull away, letting it fill your mouth and do what it wants to you..")
+
+		saynn("The tentacle's tip quickly finds the back of your mouth.. and goes even deeper, sliding down your throat, testing how well you can suppress your gag reflex.")
+
+		saynn("Your tight throat walls stretch around the invading girth.. your eyes begin watering on their own.")
+
+		saynn("Occupying your throat was just the start.. the tentacle begins to move. Slow, probing thrusts at first, rubbing against your inner walls. You can feel every pulse of it.")
+
+		saynn("Muffled moans try to escape around it, the sound vibrating along its length.. which only makes it eager. The pace quickens, becoming a steady, relentless deep-throating rhythm.")
+
+		saynn("Your hands come up to grasp near the base of it.. not to push away.. but to guide it, to take it deeper. There is a visible bump appearing on your neck each time the tentacle goes down your throat.")
+
+		saynn("[say=pc]Mmhh.. mmphh.. mhh..[/say]")
+
+		addButton("Climax", "See what happens next", "7_cum")
+	if(state == "7_cum"):
+		saynn("As your reflex starts making you gag and choke on it, the tension inside the tentacle begins to rise. The movements become more urgent, less controlled. Then, with a powerful, shuddering thrust, it locks itself deep in your throat.. and begins to pulse hard.")
+
+		saynn("Thick, warm, honey-lick fluid gets pumped directly into your stomach. Each throbbing pulse is a flood of sweet juices, filling you with a spreading, heavy warmth. The tentacle continues to twitch and pump, ensuring every last drop is deposited deep inside you.. until your belly feels full.")
+
+		saynn("Finally, spent, it slowly retracts, sliding back out of your throat with a wet pop. As it happens, you instantly start coughing and gasping for air.. the tentacle leaving you panting hard.")
+
+		saynn("The tentacle hovers before your eyes, slick with spit and its own juices, giving a satisfied, lazy tremble.")
+
+		saynn("[say=pc]..wow.. fuck..[/say]")
+
+		saynn("That was something..")
+
+		addButton("Continue", "See what happens next", "endthescene")
 
 func _react(_action: String, _args):
 	var _tentacles:PlayerSlaveryTentacles = GM.main.PS
@@ -212,8 +317,36 @@ func _react(_action: String, _args):
 
 	if(_action == "0"):
 		_tentacles.train(_tentacles.STAT_LUST)
+		_tentacles.didRubLustEvent = true
+
+	if(_action == "1"):
+		_tentacles.train(_tentacles.STAT_LUST)
+
+	if(_action == "2"):
+		_tentacles.train(_tentacles.STAT_LUST)
+
+	if(_action == "3"):
+		_tentacles.train(_tentacles.STAT_LUST)
+
+	if(_action == "4"):
+		_tentacles.train(_tentacles.STAT_LUST)
+
+	if(_action == "5"):
+		_tentacles.train(_tentacles.STAT_LUST)
+
+	if(_action == "6"):
+		_tentacles.train(_tentacles.STAT_LUST)
+
+	if(_action == "7"):
+		_tentacles.train(_tentacles.STAT_LUST)
 
 	if(_action == "say_shoo"):
 		_tentacles.trainNothing()
+
+	if(_action == "6_cum"):
+		GM.pc.orgasmFrom("pc") #TODO: Put cum here
+
+	if(_action == "7_cum"):
+		pass #TODO: CUM HERE
 
 	setState(_action)
