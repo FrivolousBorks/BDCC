@@ -2,6 +2,9 @@ extends Spatial
 
 var isPlant = false
 
+onready var animation_player = $AnimationPlayer
+onready var animation_player3 = $TentaclesAnims3/AnimationPlayer
+
 func setPlant():
 	if(isPlant):
 		return
