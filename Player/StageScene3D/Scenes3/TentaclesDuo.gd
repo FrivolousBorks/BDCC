@@ -43,10 +43,7 @@ func playAnimation(animID, _args = {}):
 
 	updateSubAnims()
 	
-	if(_args.has("plant") && _args["plant"]):
-		tentacles.setPlant()
-	else:
-		tentacles.setLatex()
+	tentacles.setSceneOptions(_args)
 	tentacles.setPlant() #TODO: REMOVE BEFORE SHIP
 	
 	if(_args.has("cum") && _args["cum"] && !(animID in ["tease"])):
@@ -56,18 +53,40 @@ func playAnimation(animID, _args = {}):
 	if(_args.has("pcCum") && _args["pcCum"]):
 		startCumPenis(doll)
 	
+	var finalScale:float = 1.0
 	if(_args.has("tentaclesScale")):
 		var theScale:float = _args["tentaclesScale"]
 		tentacles.scale = Vector3(theScale, theScale, theScale)
+		finalScale = theScale
+	elif(_args.has("tentaclesSizeSmall") && _args["tentaclesSizeSmall"]):
+		var theScale:float = 0.7
+		tentacles.scale = Vector3(theScale, theScale, theScale)
+		finalScale = theScale
+	elif(_args.has("tentaclesSizeTiny") && _args["tentaclesSizeTiny"]):
+		var theScale:float = 0.5
+		tentacles.scale = Vector3(theScale, theScale, theScale)
+		finalScale = theScale
 	else:
 		var DefaultSCALE:float = 1.0
 		tentacles.scale = Vector3(DefaultSCALE, DefaultSCALE, DefaultSCALE)
+		finalScale = DefaultSCALE
+	
+	#_args["onlyTentacles"] = true
+	if(_args.has("onlyTentacles") && _args["onlyTentacles"]):
+		doll.visible = false
+		tentacles.position.x = -2.0 + 2.0 - finalScale*2.0
+	else:
+		doll.visible = true
+		tentacles.position.x = 0.0
 	
 	var state_machine = animationTree["parameters/AnimationNodeStateMachine/playback"]
 	var state_machine2:AnimationNodeStateMachinePlayback = animationTree2["parameters/StateMachine/playback"]
 
+	#_args["instantSleep"] = true
 	if(_args.has("instantSleep") && _args["instantSleep"]):
-		state_machine2.start("sleep")
+		state_machine2.start("TentSleep-loop")
+		yield(get_tree(), "idle_frame")
+		yield(get_tree(), "idle_frame")
 
 	if(animID == "idle"):
 		state_machine2.travel("TentIdle-loop")
@@ -81,6 +100,8 @@ func playAnimation(animID, _args = {}):
 		state_machine2.travel("TentDanceFast-loop")
 	if(animID == "poke"):
 		state_machine2.travel("TentPoke-loop")
+	if(animID == "eat"):
+		state_machine2.travel("TentEat-loop")
 		
 		
 	#if(animID == "inside"):
@@ -112,7 +133,7 @@ func canTransitionTo(_actionID, _args = []):
 	return true
 
 func getSupportedStates():
-	return ["idle", "sleep", "glare", "dance", "danceFast", "poke"]
+	return ["idle", "sleep", "glare", "dance", "danceFast", "poke", "eat"]
 
 func getVarNpcs():
 	return ["pc"]
@@ -121,6 +142,21 @@ func getVarOptions():
 	var options = .getVarOptions()
 	
 	options["plant"] = {
+		type = "bool",
+	}
+	options["tentaclesLess"] = {
+		type = "bool",
+	}
+	options["instantSleep"] = {
+		type = "bool",
+	}
+	options["tentaclesSizeSmall"] = {
+		type = "bool",
+	}
+	options["tentaclesSizeTiny"] = {
+		type = "bool",
+	}
+	options["onlyTentacles"] = {
 		type = "bool",
 	}
 	

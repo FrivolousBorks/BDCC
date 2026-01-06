@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Props/Tentacles.glb" type="PackedScene" id=1]
 [ext_resource path="res://Player/Props/LatexTentacles.tres" type="Material" id=2]
 [ext_resource path="res://Player/Props/Tentacles.gd" type="Script" id=3]
 [ext_resource path="res://Player/Props/TentaclesAnims3.glb" type="PackedScene" id=4]
+[ext_resource path="res://Player/Props/TentaclesTiny.glb" type="PackedScene" id=5]
 
 [node name="Tentacles" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
@@ -27,4 +28,10 @@ light_energy = 3.0
 [node name="AnimationPlayer" parent="TentaclesAnims3" index="0"]
 root_node = NodePath("../..")
 
+[node name="TentaclesTiny" parent="." index="5" instance=ExtResource( 5 )]
+
+[node name="TentacleTiny" parent="TentaclesTiny/TentaclesArmature/Skeleton" index="0"]
+skeleton = NodePath("../../../../TentaclesArmature/Skeleton")
+
 [editable path="TentaclesAnims3"]
+[editable path="TentaclesTiny"]
