@@ -48,6 +48,12 @@ const FilledCondomInside = "FilledCondomInside"
 # loadSize = how much cum
 const StraponCreampied = "StraponCreampied"
 
+# Source = Person who peed
+# Target = Person who was peed inside of
+# hole = Which BodypartSlot was peed into
+# loadSize = how much pee
+const PeedInside = "PeedInside"
+
 # Source = Person who did it
 # Target = Who received the cum
 #data:
