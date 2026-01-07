@@ -1065,7 +1065,7 @@ func cummedInBodypartByAdvanced(bodypartSlot, characterID, advancedData:Dictiona
 			resultAmount = fluids.transferTo(thebodypart, amountToTransfer, 0.0, getID())
 	elif(sourceType == FluidSource.Pissing):
 		var thebodypart = getBodypart(bodypartSlot)
-		ch.peeProduction.getFluids().transferTo(thebodypart, amountToTransfer, 100.0)
+		resultAmount = ch.peeProduction.getFluids().transferTo(thebodypart, amountToTransfer, 100.0, getID())
 	else:
 		var thebodypart = getBodypart(bodypartSlot)
 		resultAmount = ch.getFluidAmount(sourceType) * amountToTransfer
@@ -1093,6 +1093,13 @@ func cummedInBodypartByAdvanced(bodypartSlot, characterID, advancedData:Dictiona
 				loadSize = resultAmount,
 				knotted = (advancedData.has("knotted") && advancedData["knotted"]),
 				engulfed = (advancedData.has("engulfed") && advancedData["engulfed"]),
+			})
+			ch.sendSexEvent(event)
+			sendSexEvent(event)
+		if(sourceType == FluidSource.Pissing):
+			var event = SexEventHelper.create(SexEvent.PeedInside, characterID, getID(), {
+				hole = bodypartSlot,
+				loadSize = resultAmount,
 			})
 			ch.sendSexEvent(event)
 			sendSexEvent(event)
