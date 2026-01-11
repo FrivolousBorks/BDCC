@@ -102,6 +102,10 @@ func playAnimation(animID, _args = {}):
 		state_machine2.travel("TentPoke-loop")
 	if(animID == "eat"):
 		state_machine2.travel("TentEat-loop")
+	if(animID == "whip"):
+		state_machine2.travel("TentWhip")
+	if(animID == "whip2"):
+		state_machine2.travel("TentWhip2")
 		
 		
 	#if(animID == "inside"):
@@ -133,7 +137,7 @@ func canTransitionTo(_actionID, _args = []):
 	return true
 
 func getSupportedStates():
-	return ["idle", "sleep", "glare", "dance", "danceFast", "poke", "eat"]
+	return ["idle", "sleep", "glare", "dance", "danceFast", "poke", "eat", "whip", "whip2"]
 
 func getVarNpcs():
 	return ["pc"]
