@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player/Props/TentacleEgg.glb" type="PackedScene" id=1]
-[ext_resource path="res://Player/Props/TentacleEgg_low_DefaultMaterial_BaseColor.png" type="Texture" id=2]
-[ext_resource path="res://Player/Props/TentacleEgg_low_DefaultMaterial_Roughness.png" type="Texture" id=3]
-[ext_resource path="res://Player/Props/TentacleEgg_low_DefaultMaterial_Normal.png" type="Texture" id=4]
+[ext_resource path="res://Player/Props/Textures/EggSmallColor.png" type="Texture" id=2]
+[ext_resource path="res://Player/Props/Textures/EggSmallRoughness.png" type="Texture" id=3]
+[ext_resource path="res://Player/Props/Textures/EggSmallNormal.png" type="Texture" id=4]
 
 [sub_resource type="PhysicsMaterial" id=4]
 friction = 0.93
@@ -30,7 +30,7 @@ albedo_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="SpatialMaterial" id=7]
 next_pass = SubResource( 8 )
-params_diffuse_mode = 3
+params_diffuse_mode = 4
 albedo_texture = ExtResource( 2 )
 roughness_texture = ExtResource( 3 )
 normal_enabled = true

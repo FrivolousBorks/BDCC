@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TentacleEgg_low_DefaultMaterial_Roughness.png-7795c38c44f8fdb4bee7679f2f6e47a2.stex"
+path="res://.import/EggSmallNormal.png-17794b0596f54f30c752b70457e4d337.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Props/TentacleEgg_low_DefaultMaterial_Roughness.png"
-dest_files=[ "res://.import/TentacleEgg_low_DefaultMaterial_Roughness.png-7795c38c44f8fdb4bee7679f2f6e47a2.stex" ]
+source_file="res://Player/Props/Textures/EggSmallNormal.png"
+dest_files=[ "res://.import/EggSmallNormal.png-17794b0596f54f30c752b70457e4d337.stex" ]
 
 [params]
 
@@ -18,7 +18,7 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=0
 flags/filter=true
 flags/mipmaps=false

@@ -6,7 +6,7 @@ onready var flipper = $"%Flipper"
 onready var chair = $"%Chair"
 
 func _init():
-	id = StageScene.Solo
+	id = StageScene.SoloBigEgg
 
 func _ready():
 	animationTree.active = true
@@ -16,9 +16,6 @@ func updateSubAnims():
 		animationTree["parameters/CuffsBlend/blend_amount"] = 1.0
 	else:
 		animationTree["parameters/CuffsBlend/blend_amount"] = 0.0
-
-func doTheFlipThing() -> bool:
-	return true
 
 func playAnimation(animID, _args = {}):
 	var fullAnimID = animID
@@ -35,13 +32,6 @@ func playAnimation(animID, _args = {}):
 	else:
 		doll.applyBodyState({})
 	
-	if(doTheFlipThing() && OPTIONS.shouldSoloDollLookRight()):
-		doll.scale.x = -abs(doll.scale.x)
-		flipper.scale.x = -abs(flipper.scale.x)
-	else:
-		doll.scale.x = abs(doll.scale.x)
-		flipper.scale.x = abs(flipper.scale.x)
-	
 	if(animID == "sit"):
 		chair.visible = true
 	else:
@@ -52,16 +42,9 @@ func playAnimation(animID, _args = {}):
 	if(_args.has("pcCum") && _args["pcCum"]):
 		startCumPenis(doll)
 	
-	if(animID == "custom"):
-		animationTree.active = false
-		
-		doll.applyData(_args["anim"])
-	else:
-		animationTree.active = true
-		
-		var state_machine = animationTree["parameters/AnimationNodeStateMachine/playback"]
-		if(!stateMachineTravel(doll, state_machine, fullAnimID)):
-			Log.printerr("Action "+str(animID)+" is not found for stage "+str(id))
+	var state_machine = animationTree["parameters/AnimationNodeStateMachine/playback"]
+	if(!stateMachineTravel(doll, state_machine, fullAnimID)):
+		Log.printerr("Action "+str(animID)+" is not found for stage "+str(id))
 
 func getSupportedStates():
 	return getSupportedStatesSolo()

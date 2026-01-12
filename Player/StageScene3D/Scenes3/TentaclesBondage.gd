@@ -7,7 +7,7 @@ onready var doll = $Doll3D
 onready var tentacles = $Tentacles
 
 func _init():
-	id = StageScene.TentaclesChoke
+	id = StageScene.TentaclesBondage
 
 func _ready():
 	animationTree.anim_player = animationTree.get_path_to(doll.getAnimPlayer3())
@@ -55,27 +55,33 @@ func playAnimation(animID, _args = {}):
 	var state_machine = animationTree["parameters/StateMachine/playback"]
 	var state_machine2:AnimationNodeStateMachinePlayback = animationTree2["parameters/StateMachine/playback"]
 
+	if(animID == "start"):
+		state_machine.travel("TentBondageStart_1-loop")
+		state_machine2.travel("TentBondageStart_2-loop")
+	if(animID == "bondage"):
+		state_machine.travel("TentBondage_1-loop")
+		state_machine2.travel("TentBondage_2-loop")
+	if(animID == "kneel"):
+		state_machine.travel("TentBondageKneel_1-loop")
+		state_machine2.travel("TentBondageKneel_2-loop")
 	if(animID == "tease"):
-		state_machine.travel("TentChokeTease_1-loop")
-		state_machine2.travel("TentChokeTease_2-loop")
-	elif(animID == "choke"):
-		state_machine.travel("TentChoke_1-loop")
-		state_machine2.travel("TentChoke_2-loop")
-	elif(animID == "chokefast"):
-		state_machine.travel("TentChokeFast_1-loop")
-		state_machine2.travel("TentChokeFast_2-loop")
-	elif(animID == "sextease"):
-		state_machine.travel("TentChokeSexTease_1-loop")
-		state_machine2.travel("TentChokeSexTease_2-loop")
-	elif(animID == "sexinside"):
-		state_machine.travel("TentChokeSexInside_1-loop")
-		state_machine2.travel("TentChokeSexInside_2-loop")
-	elif(animID == "sex"):
-		state_machine.travel("TentChokeSex_1-loop")
-		state_machine2.travel("TentChokeSex_2-loop")
-	elif(animID == "sexfast"):
-		state_machine.travel("TentChokeSexFast_1-loop")
-		state_machine2.travel("TentChokeSexFast_2-loop")
+		state_machine.travel("TentBondageSexTease_1-loop")
+		state_machine2.travel("TentBondageSexTease_2-loop")
+	if(animID == "inside"):
+		state_machine.travel("TentBondageSexInside_1-loop")
+		state_machine2.travel("TentBondageSexInside_2-loop")
+	if(animID == "sex"):
+		state_machine.travel("TentBondageSex_1-loop")
+		state_machine2.travel("TentBondageSex_2-loop")
+	if(animID == "fast"):
+		state_machine.travel("TentBondageSexFast_1-loop")
+		state_machine2.travel("TentBondageSexFast_2-loop")
+	if(animID == "stroke"):
+		state_machine.travel("TentBondageStroke_1-loop")
+		state_machine2.travel("TentBondageStroke_2-loop")
+	if(animID == "strokefast"):
+		state_machine.travel("TentBondageStrokeFast_1-loop")
+		state_machine2.travel("TentBondageStrokeFast_2-loop")
 
 
 func canTransitionTo(_actionID, _args = []):
@@ -88,7 +94,7 @@ func canTransitionTo(_actionID, _args = []):
 	return true
 
 func getSupportedStates():
-	return ["tease", "choke", "chokefast", "sextease", "sexinside", "sex", "sexfast"]
+	return ["start", "bondage", "kneel", "tease", "inside", "sex", "fast", "stroke", "strokefast"]
 
 func getVarNpcs():
 	return ["pc"]

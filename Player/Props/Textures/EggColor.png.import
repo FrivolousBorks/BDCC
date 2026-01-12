@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TentacleEgg_low_DefaultMaterial_BaseColor.png-78e6ecf3eafb3aa65be0cb40bb62c031.stex"
+path="res://.import/EggColor.png-04ac7bfdde5d910c5925918877d1a15d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Props/TentacleEgg_low_DefaultMaterial_BaseColor.png"
-dest_files=[ "res://.import/TentacleEgg_low_DefaultMaterial_BaseColor.png-78e6ecf3eafb3aa65be0cb40bb62c031.stex" ]
+source_file="res://Player/Props/Textures/EggColor.png"
+dest_files=[ "res://.import/EggColor.png-04ac7bfdde5d910c5925918877d1a15d.stex" ]
 
 [params]
 

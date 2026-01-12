@@ -44,7 +44,6 @@ func playAnimation(animID, _args = {}):
 	updateSubAnims()
 	
 	tentacles.setSceneOptions(_args)
-	tentacles.setPlant() #TODO: REMOVE BEFORE SHIP
 	
 	if(_args.has("cum") && _args["cum"] && !(animID in ["tease"])):
 		startCumInsideSolo(doll, 1.0)
