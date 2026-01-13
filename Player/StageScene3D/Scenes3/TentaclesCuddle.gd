@@ -67,6 +67,9 @@ func playAnimation(animID, _args = {}):
 	if(animID == "breasts"):
 		state_machine.travel("TentCuddleBreasts_1-loop")
 		state_machine2.travel("TentCuddleBreasts_2-loop")
+	if(animID == "tease"):
+		state_machine.travel("TentCuddleTease_1-loop")
+		state_machine2.travel("TentCuddleTease_2-loop")
 	if(animID == "inside"):
 		state_machine.travel("TentCuddleInside_1-loop")
 		state_machine2.travel("TentCuddleInside_2-loop")
@@ -80,7 +83,7 @@ func playAnimation(animID, _args = {}):
 		state_machine.travel("TentCuddleStroke_1-loop")
 		state_machine2.travel("TentCuddleStroke_2-loop")
 	if(animID == "strokefast"):
-		state_machine.travel("TentCuddleStroke_1-loop")
+		state_machine.travel("TentCuddleStrokeFast_1-loop")
 		state_machine2.travel("TentCuddleStrokeFast_2-loop")
 
 
@@ -94,7 +97,7 @@ func canTransitionTo(_actionID, _args = []):
 	return true
 
 func getSupportedStates():
-	return ["cuddle", "breaststease", "breasts", "inside", "sex", "fast", "stroke", "strokefast"]
+	return ["cuddle", "breaststease", "breasts", "tease", "inside", "sex", "fast", "stroke", "strokefast"]
 
 func getVarNpcs():
 	return ["pc"]
