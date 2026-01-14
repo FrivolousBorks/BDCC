@@ -904,6 +904,9 @@ func getSupportedSexTypes():
 func getSexType():
 	return getSexEngine().getSexTypeID()
 
+func isTentaclesSex() -> bool:
+	return getSexType() == SexType.TentaclesSex
+
 func satisfyGoals():
 	var goalData = getGoals()
 	var sexEngine = getSexEngine()

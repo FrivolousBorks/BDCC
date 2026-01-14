@@ -137,7 +137,7 @@ func processTurn():
 
 func inside_processTurn():
 	cockWarmer(SUB_0, DOM_0, S_VAGINA)
-	cockWarmer(SUB_0, DOM_1, S_VAGINA)
+	cockWarmer(SUB_0, DOM_1, S_ANUS)
 
 func sex_processTurn():
 	stimulateSex(DOM_0, SUB_0, S_VAGINA, I_NORMAL)
@@ -207,7 +207,7 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 		switchDoms(_indx, (_indx + 1) if _indx < 2 else 0)
 	if(_id == "cum"):
 		stimulate(DOM_0, S_PENIS, SUB_0, S_VAGINA, I_NORMAL, Fetish.VaginalSexGiving)
-		stimulate(DOM_0, S_PENIS, SUB_0, S_ANUS, I_NORMAL, Fetish.AnalSexGiving)
+		stimulate(DOM_1, S_PENIS, SUB_0, S_ANUS, I_NORMAL, Fetish.AnalSexGiving)
 		var orgAmount:int = 0
 		if(isReadyToCumHandled(DOM_0)):
 			orgAmount += 1

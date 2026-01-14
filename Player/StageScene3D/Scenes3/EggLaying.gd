@@ -59,9 +59,9 @@ func playAnimation(animID, _args = {}):
 	
 	if(animID == "idle"):
 		state_machine.travel("EggLaying-loop")
-	if(animID == "egg"):
-		eggsLeft = 3
-		#state_machine.travel("EggLayingDo-loop")
+	var theInt:int = int(animID)
+	if(theInt > 0 || animID == "0"):
+		eggsLeft = theInt
 
 func canTransitionTo(_actionID, _args = []):
 	var firstDoll = "pc"
@@ -73,7 +73,10 @@ func canTransitionTo(_actionID, _args = []):
 	return true
 
 func getSupportedStates():
-	return ["idle", "egg"]
+	var theAr:Array = ["idle"]
+	for _i in range(21):
+		theAr.append(str(_i))
+	return theAr
 
 func getVarNpcs():
 	return ["pc"]

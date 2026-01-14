@@ -4,6 +4,9 @@ class_name SexTypeBase
 var id = "error"
 var sexEngineRef: WeakRef
 
+func processArgs(_args:Dictionary):
+	pass
+
 func initArgs(_args = {}):
 	pass
 

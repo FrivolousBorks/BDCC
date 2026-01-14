@@ -8,6 +8,7 @@ const SubsStartUnconscious = "unconscious"
 const DisableDynamicJoiners = "noDynamicJoiners"
 const SubsStartNaked = "SubsStartNaked"
 const DomsStartNaked = "DomsStartNaked"
+const DisableDomTalking = "DisableDomTalking"
 
 const DomNoPullingOut = "domNoPullout"
 const MustUseCondoms = "mustUseCondoms"

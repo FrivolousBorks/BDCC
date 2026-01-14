@@ -638,6 +638,7 @@ func registerEverything():
 	yield(get_tree(), "idle_frame")
 	
 	registerSexActivitiesFolder("res://Game/SexEngine/SexActivity/")
+	registerSexActivitiesFolder("res://Game/SexEngine/SexActivity/Tentacles/")
 	registerFetishesFolder("res://Game/SexEngine/Fetish/")
 	registerSexGoalsFolder("res://Game/SexEngine/Goal/")
 	registerSexTypeFolder("res://Game/SexEngine/SexType/")

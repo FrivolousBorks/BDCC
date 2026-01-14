@@ -19,6 +19,7 @@ func getGoals():
 func getSupportedSexTypes():
 	return {
 		SexType.DefaultSex: true,
+		SexType.TentaclesSex: true,
 	}
 
 func canStopSexWithThisActivity() -> bool:
@@ -43,7 +44,10 @@ func getTags(_indx:int) -> Array:
 	return []
 
 func startActivity(_args):
-	addText("{dom.You} {dom.youVerb('put')} {dom.yourHis} hand on {sub.your} neck!")
+	if(!isTentaclesSex()):
+		addText("{dom.You} {dom.youVerb('put')} {dom.yourHis} hand on {sub.your} neck!")
+	else:
+		addText("{dom.You} {dom.youVerb('wrap')} {dom.yourHis} tentacle around {sub.your} neck!")
 	react(SexReaction.AboutToBeatUp)
 
 func getExtraChokeText() -> String:
@@ -232,6 +236,13 @@ func getAnimationPriority():
 	return 2
 
 func getAnimation():
+	if(isTentaclesSex()):
+		if(getState() == "hardchoking"):
+			return [StageScene.TentaclesChoke, "chokefast", {pc=SUB_0}]
+		if(getState() == "choking"):
+			return [StageScene.TentaclesChoke, "choke", {pc=SUB_0}]
+		return [StageScene.TentaclesChoke, "tease", {pc=SUB_0}]
+	
 	if(getSexType() != SexType.DefaultSex):
 		return null
 	if(getState() == "hardchoking" || getSubInfo().isUnconscious()):

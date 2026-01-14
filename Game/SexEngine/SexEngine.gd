@@ -27,6 +27,7 @@ var domNoPullingOut:bool = false
 var mustUseCondoms:bool = false
 var disableTFPills:bool = false
 var noViolence:bool = false
+var domsNoTalking:bool = false
 
 var pcAllowsDomAutonomy:bool = false
 var pcAllowsDynJoiners:bool = false
@@ -109,7 +110,10 @@ func initSexType(theSexType, args:Dictionary = {}):
 		sexType = GlobalRegistry.createSexType(SexType.DefaultSex)
 	else:
 		sexType = theSexType
-		
+	
+	if(sexType):
+		sexType.processArgs(args)
+	
 	if(args.has(SexMod.SubsStartUnconscious) && args[SexMod.SubsStartUnconscious]):
 		for subID in subs:
 			getSubInfo(subID).getChar().addConsciousness(-1.0)
@@ -135,12 +139,15 @@ func initSexType(theSexType, args:Dictionary = {}):
 			getDomInfo(domID).getChar().lustStateFullyUndress()
 	if(args.has(SexMod.DisableTFPills)):
 		disableTFPills = args[SexMod.DisableTFPills]
+	if(args.has(SexMod.DisableDomTalking)):
+		domsNoTalking = args[SexMod.DisableDomTalking]
 	if(args.has(SexMod.NoViolence)):
 		noViolence = args[SexMod.NoViolence]
 	if(sexType != null):
 		sexType.setSexEngine(self)
 		sexType.initArgs(args)
 	
+	checkExposedBodypartsOnStart()	
 	calcAllPossibleGoalsToBeg()
 
 func getSexTypeID() -> String:
@@ -169,7 +176,6 @@ func initPeople(domIDs, subIDs):
 		
 		subs[subID] = subInfo
 		
-	checkExposedBodypartsOnStart()
 	checkForHurtDoms()
 
 func checkForHurtDoms():
@@ -1706,6 +1712,7 @@ func saveData():
 		"domNoPullingOut": domNoPullingOut,
 		"mustUseCondoms": mustUseCondoms,
 		"disableTFPills": disableTFPills,
+		"domsNoTalking": domsNoTalking,
 		"noViolence": noViolence,
 	}
 	if(sexType != null):
@@ -1749,6 +1756,7 @@ func loadData(data):
 	domNoPullingOut = SAVE.loadVar(data, "domNoPullingOut", false)
 	mustUseCondoms = SAVE.loadVar(data, "mustUseCondoms", false)
 	disableTFPills = SAVE.loadVar(data, "disableTFPills", false)
+	domsNoTalking = SAVE.loadVar(data, "domsNoTalking", false)
 	noViolence = SAVE.loadVar(data, "noViolence", false)
 	
 	var sexTypeID = SAVE.loadVar(data, "sexTypeID", SexType.DefaultSex)
