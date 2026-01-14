@@ -124,16 +124,23 @@ func getActions(_indx:int):
 		if(getState() == "" || getSubInfo().isUnconscious()):
 			addAction("stop", getStopChokeScore(), "Stop choking", "Enough choking")
 
-		if(getSub().hasReachableVagina() && (getDom().hasReachablePenis() || getDom().isWearingStrapon())):
-			addAction("startvag", getDomInfo().goalsScore({SexGoal.ChokeSexVaginal: 0.3}, getSubID()), "+ Fuck Vaginal", "Start fucking their pussy at the same time", {A_CATEGORY: ["Fuck"]})
-		if(getSub().hasReachableAnus() && (getDom().hasReachablePenis() || getDom().isWearingStrapon())):
-			addAction("startanal", getDomInfo().goalsScore({SexGoal.ChokeSexAnal: 0.3}, getSubID()), "+ Fuck Anal", "Start fucking their ass at the same time", {A_CATEGORY: ["Fuck"]})
+		if(!isTentaclesSex()):
+			if(getSub().hasReachableVagina() && (getDom().hasReachablePenis() || getDom().isWearingStrapon())):
+				addAction("startvag", getDomInfo().goalsScore({SexGoal.ChokeSexVaginal: 0.3}, getSubID()), "+ Fuck Vaginal", "Start fucking their pussy at the same time", {A_CATEGORY: ["Fuck"]})
+			if(getSub().hasReachableAnus() && (getDom().hasReachablePenis() || getDom().isWearingStrapon())):
+				addAction("startanal", getDomInfo().goalsScore({SexGoal.ChokeSexAnal: 0.3}, getSubID()), "+ Fuck Anal", "Start fucking their ass at the same time", {A_CATEGORY: ["Fuck"]})
 
-		if(getDom().hasReachableVagina() && (getSub().hasReachablePenis() || getSub().isWearingStrapon())):
-			addAction("startridevag", getDomInfo().goalsScore({SexGoal.ChokeReceiveVaginal: 0.3}, getSubID()), "+ Ride Vaginal", "Ride their cock with your pussy at the same time", {A_CATEGORY: ["Fuck"]})
-		if(getDom().hasReachableAnus() && (getSub().hasReachablePenis() || getSub().isWearingStrapon())):
-			addAction("startrideanal", getDomInfo().goalsScore({SexGoal.ChokeReceiveAnal: 0.3}, getSubID()), "+ Ride Anal", "Ride their cock with your ass at the same time", {A_CATEGORY: ["Fuck"]})
-	
+			if(getDom().hasReachableVagina() && (getSub().hasReachablePenis() || getSub().isWearingStrapon())):
+				addAction("startridevag", getDomInfo().goalsScore({SexGoal.ChokeReceiveVaginal: 0.3}, getSubID()), "+ Ride Vaginal", "Ride their cock with your pussy at the same time", {A_CATEGORY: ["Fuck"]})
+			if(getDom().hasReachableAnus() && (getSub().hasReachablePenis() || getSub().isWearingStrapon())):
+				addAction("startrideanal", getDomInfo().goalsScore({SexGoal.ChokeReceiveAnal: 0.3}, getSubID()), "+ Ride Anal", "Ride their cock with your ass at the same time", {A_CATEGORY: ["Fuck"]})
+		else:
+			if(getSub().hasReachableVagina() && (getDom().hasReachablePenis() || getDom().isWearingStrapon())):
+				addAction("startvagtentacles", getDomInfo().goalsScore({SexGoal.ChokeSexVaginal: 0.3}, getSubID()), "+ Fuck Vaginal", "Start fucking their pussy at the same time", {A_CATEGORY: ["Fuck"]})
+			if(getSub().hasReachableAnus() && (getDom().hasReachablePenis() || getDom().isWearingStrapon())):
+				addAction("startanaltentacles", getDomInfo().goalsScore({SexGoal.ChokeSexAnal: 0.3}, getSubID()), "+ Fuck Anal", "Start fucking their ass at the same time", {A_CATEGORY: ["Fuck"]})
+
+		
 	if(_indx == SUB_0):
 		var escapeScore:float = 0.3 + getSubInfo().getResistScore() * 2.0 - getSubInfo().fetishScore({Fetish.Choking: 0.5})
 		addAction("escape", escapeScore, "Escape choking", "Try to escape the choking", {A_CHANCE: getResistChance(SUB_0, DOM_0, RESIST_NECK_FOCUS, 20.0, 0.0)})
@@ -165,6 +172,14 @@ func doAction(_indx:int, _actionID:String, _action:Dictionary):
 		react(SexReaction.StartChokeFuck)
 	if(_actionID == "startanal"):
 		switchCurrentActivityTo("SexAnalOnAllFours", ["choke"])
+		addText("{dom.You} {dom.youVerb('raise')} {sub.yourHis} leg, preparing to fuck {sub.yourHis} {anus}.")
+		react(SexReaction.StartChokeFuck)
+	if(_actionID == "startvagtentacles"):
+		switchCurrentActivityTo("TentaclesSexAllHoles", ["choke"])
+		addText("{dom.You} {dom.youVerb('raise')} {sub.yourHis} leg, preparing to fuck {sub.yourHis} {pussy}.")
+		react(SexReaction.StartChokeFuck)
+	if(_actionID == "startanaltentacles"):
+		switchCurrentActivityTo("TentaclesSexAllHoles", ["choke"])
 		addText("{dom.You} {dom.youVerb('raise')} {sub.yourHis} leg, preparing to fuck {sub.yourHis} {anus}.")
 		react(SexReaction.StartChokeFuck)
 	if(_actionID == "startridevag"):

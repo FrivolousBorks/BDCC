@@ -7,6 +7,8 @@ const POSE_CUDDLEFUCK = "cuddlefuck"
 const POSE_BONDAGEFUCK = "bondagefuck"
 const POSE_CHOKEFUCK = "chokefuck"
 
+#TODO: IS VAG SWITCH
+
 #TODO: Switch/start text
 const POSES = {
 	POSE_ALLHOLES: {
@@ -47,6 +49,11 @@ func _init():
 
 
 func getGoals():
+	if(currentPose == POSE_CHOKEFUCK):
+		return {
+			SexGoal.ChokeSexVaginal: 1.0,
+			SexGoal.FuckVaginal: 1.0,
+		}
 	return {
 		SexGoal.FuckVaginal: 1.0,
 		SexGoal.FuckAnal: 1.0,
@@ -95,7 +102,10 @@ func startActivity(_args):
 	addText("{dom.You} grab {sub.you} and prepare for sex, {dom.yourHis} tentacles are pressed against all {sub.yourHis} holes at once!")
 
 func onSwitchFrom(_otherActivity, _args):
-	pass
+	if(_args != null && _args == ["choke"]):
+		currentPose = POSE_CHOKEFUCK
+		return
+	currentPose = RNG.pick(getAvaiablePoses())
 
 func processTurn():
 	return
