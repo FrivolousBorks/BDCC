@@ -2709,7 +2709,153 @@ func cumInsideShare(_indxWho:int, _indxTarget1:int, _hole1:String, _indxTarget2:
 			target2Info.addResistance(1.0)
 			target2Info.addFear(0.1)
 	theInfo.cum()
+
+func cumInsideNoText(_indxWho:int, _indxTarget:int, _hole:String, _extra:Dictionary = {}) -> Dictionary:
+	var theChar:BaseCharacter = getDomOrSub(_indxWho)
+	var target:BaseCharacter = getDomOrSub(_indxTarget)
+	if(!theChar.hasPenis() && !theChar.isWearingStrapon()):
+		return {}
+	if(!target.hasBodypart(_hole)):
+		return {}
+
+	var tryKnot:bool = _extra["tryKnot"] if _extra.has("tryKnot") else false
+	#var isRiding:bool = _extra["isRiding"] if _extra.has("isRiding") else false
+	#var isDeepthroat:bool = _extra["isDeepthroat"] if _extra.has("isDeepthroat") else false
+
+	if(theChar.isWearingStrapon()):
+		if(_hole == S_VAGINA):
+			fetishAffect(_indxWho, Fetish.StraponSexVaginal, 3.0)
+			fetishAffect(_indxTarget, Fetish.VaginalSexReceiving, 3.0)
+		if(_hole == S_ANUS):
+			fetishAffect(_indxWho, Fetish.StraponSexAnal, 3.0)
+			fetishAffect(_indxTarget, Fetish.AnalSexReceiving, 3.0)
+		
+		var strapon = theChar.getWornStrapon()
+		if(strapon.getFluids() != null && !strapon.getFluids().isEmpty()):
+			var straponHasCum:bool = strapon.getFluids().hasVirileFluids()
+			target.cummedInBodypartByAdvanced(_hole, theChar.getID())
+			
+			if(straponHasCum && target.hasWombIn(_hole) && target.getFertility() > 0.1):
+				fetishAffect(_indxWho, Fetish.Breeding, 5.0)
+				fetishAffect(_indxTarget, Fetish.BeingBred, 5.0)
+		return {}
 	
+	if(_hole in [S_VAGINA, S_ANUS]):
+		var topInfo:SexInfoBase = getDomOrSubInfo(_indxWho)
+		var topChar:BaseCharacter = topInfo.getChar()
+		#var topStrapon:bool = topChar.isWearingStrapon()
+		var bottomInfo:SexInfoBase = getDomOrSubInfo(_indxTarget)
+		var bottomChar:BaseCharacter = bottomInfo.getChar()
+
+		var condomBroke:bool = false
+		var knotSuccess:bool = false
+		var didCumInside:bool = false
+		var handledCum:bool = false
+		var shouldStretchPainfully:bool = false
+
+		if(_hole == S_VAGINA):
+			fetishAffect(_indxWho, Fetish.VaginalSexGiving, 3.0)
+			fetishAffect(_indxTarget, Fetish.VaginalSexReceiving, 3.0)
+		if(_hole == S_ANUS):
+			fetishAffect(_indxWho, Fetish.AnalSexGiving, 3.0)
+			fetishAffect(_indxTarget, Fetish.AnalSexReceiving, 3.0)
+
+		if(tryKnot):
+			var freeRoom:float = bottomChar.getPenetrationFreeRoomBy(_hole, topChar.getID())
+			var chanceToPain:float = -freeRoom * 5.0
+			if(topInfo.isAngry()):
+				chanceToPain *= 2.0
+			if(RNG.chance(10)):
+				chanceToPain *= 1.5
+			if(RNG.chance(chanceToPain)):
+				shouldStretchPainfully = true
+
+			#isTryingToKnot = true
+			bottomChar.gotOrificeStretchedBy(_hole, topChar.getID(), true, 0.5)
+			if(RNG.chance(bottomChar.getKnottingChanceBy(_hole, topChar.getID()))):
+				knotSuccess = true
+		
+		var condom:ItemBase = topChar.getWornCondom()
+		if(condom != null):
+			var breakChance:float = condom.getCondomBreakChance()
+			condomBroke = topChar.shouldCondomBreakWhenFucking(bottomChar, breakChance)
+			if(condomBroke):
+				condom.destroyMe()
+				didCumInside = true
+				fetishUp(_indxWho, Fetish.Condoms, -20.0)
+				fetishUp(_indxTarget, Fetish.Condoms, -30.0)
+			else:
+				fetishAffect(_indxWho, Fetish.Condoms, 5.0)
+				fetishAffect(_indxTarget, Fetish.Condoms, 5.0)
+				handledCum = true
+				
+				var loadSize = topChar.cumInItem(condom)
+				topInfo.cum()
+				bottomInfo.addArousalSex(0.2)
+				sendSexEvent(SexEvent.FilledCondomInside, _indxWho, _indxTarget, {hole=_hole,loadSize=loadSize,knotted=knotSuccess})
+		
+		if(!handledCum):
+			didCumInside = true
+			if(bottomChar.hasWombIn(_hole) && getDomOrSub(_indxWho).getFertility() > 0.1 && getDomOrSub(_indxTarget).getVirility() > 0.1):
+				fetishAffect(_indxWho, Fetish.Breeding, 5.0)
+				fetishAffect(_indxTarget, Fetish.BeingBred, 5.0)
+				
+				if(bottomInfo is SexSubInfo):
+					var beingBredScore:float = bottomInfo.fetishScore({Fetish.BeingBred: 1.0})
+					if(beingBredScore < 0.0):
+						bottomInfo.addResistance(1.0)
+						bottomInfo.addFear(0.1)
+			bottomChar.cummedInBodypartByAdvanced(_hole, topInfo.getCharID(), {knotted=knotSuccess,condomBroke=condomBroke})
+			topInfo.cum()
+			bottomInfo.addArousalSex(0.2)
+
+		if(shouldStretchPainfully):
+			doStretch(_indxWho, _indxTarget, _hole)
+		
+		return {
+			text="",
+			didCumInside=didCumInside,
+			condomBroke=condomBroke,
+			knotSuccess=knotSuccess
+		}
+	if(_hole == S_MOUTH):
+		var topInfo:SexInfoBase = getDomOrSubInfo(_indxWho)
+		var topChar:BaseCharacter = topInfo.getChar()
+		#var topStrapon:bool = topChar.isWearingStrapon()
+		var bottomInfo:SexInfoBase = getDomOrSubInfo(_indxTarget)
+		var bottomChar:BaseCharacter = bottomInfo.getChar()
+		
+		fetishAffect(_indxWho, Fetish.OralSexReceiving, 3.0)
+		fetishAffect(_indxTarget, Fetish.OralSexGiving, 3.0)
+		
+		var condomBroke:bool = false
+		var condom:ItemBase = topChar.getWornCondom()
+		if(condom != null):
+			var breakChance:float = condom.getCondomBreakChance()
+			condomBroke = topChar.shouldCondomBreakWhenFucking(bottomChar, breakChance)
+			if(condomBroke):
+				condom.destroyMe()
+				fetishUp(_indxWho, Fetish.Condoms, -20.0)
+				fetishUp(_indxTarget, Fetish.Condoms, -30.0)
+			else:
+				fetishAffect(_indxWho, Fetish.Condoms, 5.0)
+				fetishAffect(_indxTarget, Fetish.Condoms, 5.0)
+				topChar.cumInItem(condom)
+				topInfo.cum()
+				return {}
+		if(bottomInfo is SexSubInfo):
+			var beingBredScore:float = bottomInfo.fetishScore({Fetish.OralSexGiving: 1.0})
+			if(beingBredScore < 0.0):
+				bottomInfo.addResistance(1.0)
+				bottomInfo.addFear(0.1)
+		bottomChar.cummedInBodypartByAdvanced(BodypartSlot.Head, topInfo.getCharID(), {condomBroke=condomBroke})
+		topInfo.cum()
+		
+		#return getSexEngine().combineData({text=text}, applyTallymarkIfNeededData(BodypartSlot.Head))
+		return {}
+	
+	return {}
+
 func cumInside(_indxWho:int, _indxTarget:int, _hole:String, _extra:Dictionary = {}) -> Dictionary:
 	#var theInfo:SexInfoBase = getDomOrSubInfo(_indxWho)
 	var theChar:BaseCharacter = getDomOrSub(_indxWho)
