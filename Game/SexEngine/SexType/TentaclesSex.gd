@@ -1,5 +1,7 @@
 extends SexTypeBase
 
+var tentacleType:int = TentacleEggType.Plant
+
 func _init():
 	id = SexType.TentaclesSex
 
@@ -7,6 +9,10 @@ func processArgs(_args:Dictionary):
 	_args[SexMod.DomsStartNaked] = true
 	_args[SexMod.DisableDynamicJoiners] = true
 	_args[SexMod.DisableDomTalking] = true
+
+func initArgs(_args = {}):
+	if(_args.has(SexMod.TentacleMonsterType)):
+		tentacleType = _args[SexMod.TentacleMonsterType]
 
 func getDefaultAnimation():
 	var sexEngine = getSexEngine()
@@ -26,3 +32,15 @@ func getDefaultAnimation():
 	if(isUnconscious(theSubIDs[0])):
 		return [StageScene.TentaclesSleepOn, "sleep", {pc=theSubIDs[0]}]
 	return [StageScene.TentaclesTease, "tease", {pc=theSubIDs[0]}]
+
+func processAnimationArgs(_args:Dictionary):
+	if(tentacleType == TentacleEggType.Plant):
+		_args["plant"] = true
+
+func saveData():
+	return {
+		tentacleType = tentacleType,
+	}
+
+func loadData(_data):
+	tentacleType = SAVE.loadVar(_data, "tentacleType", TentacleEggType.Plant)

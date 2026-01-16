@@ -38,6 +38,22 @@ func hasWombIn(orificeType:int) -> bool:
 	
 	return false
 
+func hasOrifice(orificeType:int) -> bool:
+	if(character == null):
+		return false
+		
+	if(orificeType == OrificeType.Vagina):
+		if(getCharacter().hasBodypart(BodypartSlot.Vagina)):
+			return true
+	if(orificeType == OrificeType.Anus):
+		if(getCharacter().hasBodypart(BodypartSlot.Anus)):
+			return true
+	if(orificeType == OrificeType.Throat):
+		if(getCharacter().hasBodypart(BodypartSlot.Head)):
+			return true
+	
+	return false
+
 func hasAnyWomb() -> bool:
 	for orificeType in OrificeType.getAll():
 		if(hasWombIn(orificeType)):
@@ -290,6 +306,15 @@ func getPregnancyProgress() -> float:
 	#	print("PREGNANCY: "+str(maxProgress))
 	return maxProgress
 
+
+func getPregnancyProgressDoll() -> float:
+	var bigEggAmount:int = 0
+	for egg in impregnatedEggCells: # 10 big eggs -> doll looks fully pregnant
+		if(egg.bigEgg):
+			bigEggAmount += 1
+	
+	return max(getPregnancyProgress(), min(bigEggAmount*0.1, 1.0))
+
 func isReadyToGiveBirth() -> bool:
 	var readyFetusAmount:int = 0
 	for egg in impregnatedEggCells:
@@ -300,6 +325,39 @@ func isReadyToGiveBirth() -> bool:
 		return readyFetusAmount == impregnatedEggCells.size()
 	else:
 		return false
+
+func isReadyToLayEggs() -> bool:
+	for egg in impregnatedEggCells:
+		if(egg.isReadyToBeLaid()):
+			return true
+	return false
+
+func addTentacleEgg(_charID:String, _tentacleType:int, _growTime:int, _orifice:int) -> bool:
+	if(!hasOrifice(_orifice)):
+		return false
+	var egg:EggCell = EggCell.new()
+	egg.cycle = weakref(self)
+	
+	egg.setOrifice(_orifice)
+	egg.setMother(getCharacter().getID(), getCharacter().getSpecies())
+	
+	egg.isimpregnated = true
+	egg.fatherID = _charID
+	#causerID = fluidDNA.getCauserID()
+	
+	# Not needed for tentacle eggs but might as well
+	egg.resultSpecies = egg.motherSpecies.duplicate()
+	if(egg.fatherID == "pc" || egg.motherID == "pc"):
+		egg.resultGender = GM.main.getEncounterSettings().generateGender()
+	else:
+		egg.resultGender = NpcGender.generate()
+	
+	egg.bigEgg = true
+	egg.tentacleEggType = _tentacleType
+	egg.lifeSpan = _growTime
+	
+	impregnatedEggCells.append(egg)
+	return true
 
 func getLitterSize() -> int:
 	return impregnatedEggCells.size()

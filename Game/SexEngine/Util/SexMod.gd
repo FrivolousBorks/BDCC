@@ -15,3 +15,5 @@ const MustUseCondoms = "mustUseCondoms"
 
 const DisableTFPills = "noTFPills"
 const NoViolence = "noViolence"
+
+const TentacleMonsterType = "TentacleMonsterType"

@@ -44,7 +44,10 @@ func getDefaultAnimation():
 	if(isUnconscious(theSubIDs[0])):
 		return [StageScene.SexStart, "defeated", {pc=theDomIDs[0], npc=theSubIDs[0]}]
 	return [StageScene.SexStart, "start", {pc=theDomIDs[0], npc=theSubIDs[0]}]
-	
+
+func processAnimationArgs(_args:Dictionary):
+	pass
+
 func saveData():
 	return {
 		

@@ -1409,6 +1409,11 @@ func getPregnancyProgress() -> float:
 		return menstrualCycle.getPregnancyProgress()
 	return 0.0
 
+func getPregnancyProgressDoll() -> float:
+	if(menstrualCycle != null):
+		return menstrualCycle.getPregnancyProgressDoll()
+	return 0.0
+
 func getPregnancyLitterSize() -> int:
 	if(menstrualCycle != null):
 		return menstrualCycle.getLitterSize()
@@ -1781,7 +1786,7 @@ func softUpdateDoll(doll: Doll3D):
 	else:
 		doll.setState("breasts", "flat")
 
-	var pregnancyValue = clamp(getPregnancyProgress(), 0.0, 1.0)
+	var pregnancyValue:float = clamp(getPregnancyProgress(), 0.0, 1.0)
 	
 	var pregnancyKidAmount = getPregnancyLitterSize()
 	var extraKidsMult = 1.0

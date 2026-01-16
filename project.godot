@@ -1724,6 +1724,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Modules/TaviModule/Module.gd"
 }, {
+"base": "Object",
+"class": "TentacleEggType",
+"language": "GDScript",
+"path": "res://Game/Pregnancy/TentacleEggType.gd"
+}, {
 "base": "QuestBase",
 "class": "TestQuest",
 "language": "GDScript",
@@ -2173,6 +2178,7 @@ _global_script_class_icons={
 "TFResult": "",
 "TFUtil": "",
 "TaviModule": "",
+"TentacleEggType": "",
 "TestQuest": "",
 "TestResource": "",
 "TextureRectLayered": "",

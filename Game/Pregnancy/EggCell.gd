@@ -14,18 +14,21 @@ var resultGender:String = NpcGender.Male
 var monozygotic: int = 1
 var fetusReadyForBirth := false
 
+var bigEgg:bool = false # Is this eggCell actually a big egg
+var tentacleEggType:int = TentacleEggType.NONE # Did this egg come from a tentacle monster
+# Tentacle eggs don't get born as children, they instead become fruits (if egg was a plant one)
+
+var cycle = null
 
 func _init():
 	#lifeSpan = 60*60*24*2 + RNG.randi_range(-60*60*12, 60*60*24)
 	var optionsLifespan:int = OPTIONS.getEggCellLifespanHours()
 	optionsLifespan = Util.maxi(optionsLifespan, 1)
 	#warning-ignore:integer_division
-	var minRange = int(optionsLifespan / 4)
+	var minRange:int = int(optionsLifespan / 4)
 	#warning-ignore:integer_division
-	var maxRange = int(optionsLifespan / 2)
+	var maxRange:int = int(optionsLifespan / 2)
 	lifeSpan = 60*60*optionsLifespan + RNG.randi_range(-60*60*minRange, 60*60*maxRange)
-
-var cycle = null
 
 func setMonozygotic(): #check if the egg splits
 	var chance = RNG.randf_range(0.00, 100.00)
@@ -89,7 +92,7 @@ func getTimeUntilReadyForBirth() -> int:
 	var currentProgress := min(1.0, getProgress())
 	return int(gestationTime * (1.0 - currentProgress))
 
-func processTime(seconds):
+func processTime(seconds:int):
 	
 	if(!isimpregnated):
 		lifeSpan -= seconds
@@ -97,17 +100,32 @@ func processTime(seconds):
 			removeMe()
 	
 	if(isimpregnated):
-		var newProgress: float = float(seconds) / getGestationTime()
-		
-		if((progress + newProgress) >= 1.0):
-			fetusReadyForBirth = true
-		
-		progress += newProgress
-		if(progress > 2.5):
-			progress = 2.5
+		if(tentacleEggType == TentacleEggType.NONE):
+			var newProgress: float = float(seconds) / getGestationTime()
+			
+			if((progress + newProgress) >= 1.0):
+				fetusReadyForBirth = true
+			
+			progress += newProgress
+			if(progress > 2.5):
+				progress = 2.5
+
+		else: # Tentacle eggs
+			lifeSpan -= seconds # Lifespan is the grow time for tentacle eggs
+			if(lifeSpan <= 0):
+				fetusReadyForBirth = true
 
 func fetusIsReadyForBirth() -> bool:
+	if(tentacleEggType != TentacleEggType.NONE): # Tentacle eggs work differnetly
+		return false
+	if(bigEgg): # Big eggs need to be laid
+		return false
 	return fetusReadyForBirth
+
+func isReadyToBeLaid() -> bool:
+	if(bigEgg || (tentacleEggType != TentacleEggType.NONE)):
+		return fetusReadyForBirth
+	return false
 
 func getProgress() -> float:
 	return progress
@@ -168,8 +186,14 @@ func tryImpregnate(fluidDNA, amountML:float, eggMultiplier:float = 1.0, fertilit
 		return true
 	return false
 
+func setBigEgg(_big:bool):
+	bigEgg = _big
+
+func setTentacleEggType(_type:int):
+	tentacleEggType = _type
+
 func saveData() -> Dictionary:
-	var data = {
+	var data:Dictionary = {
 		"lifeSpan": lifeSpan,
 		"orificeType": orificeType,
 		"isimpregnated": isimpregnated,
@@ -183,6 +207,10 @@ func saveData() -> Dictionary:
 		"monozygotic": monozygotic,
 		"fetusReadyForBirth": fetusReadyForBirth
 	}
+	if(bigEgg):
+		data["bigEgg"] = bigEgg
+	if(tentacleEggType != TentacleEggType.NONE):
+		data["tentacleEggType"] = tentacleEggType
 	
 	return data
 
@@ -199,3 +227,8 @@ func loadData(data:Dictionary):
 	resultGender = SAVE.loadVar(data, "resultGender", NpcGender.Male)
 	monozygotic = SAVE.loadVar(data, "monozygotic", 1)
 	fetusReadyForBirth = SAVE.loadVar(data, "fetusReadyForBirth", false)
+	
+	if(data.has("bigEgg")):
+		bigEgg = SAVE.loadVar(data, "bigEgg", false)
+	if(data.has("tentacleEggType")):
+		tentacleEggType = SAVE.loadVar(data, "tentacleEggType", TentacleEggType.NONE)

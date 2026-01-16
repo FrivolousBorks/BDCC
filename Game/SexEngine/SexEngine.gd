@@ -1424,10 +1424,10 @@ func playAnimation():
 	if(animInfo == null):
 		return
 	
-	if(animInfo.size() > 2):
-		GM.main.playAnimation(animInfo[0], animInfo[1], animInfo[2])
-	else:
-		GM.main.playAnimation(animInfo[0], animInfo[1])
+	var theArgs:Dictionary = animInfo[2] if animInfo.size() > 2 else {}
+	sexType.processAnimationArgs(theArgs)
+	
+	GM.main.playAnimation(animInfo[0], animInfo[1], theArgs)
 	resetJustCame()
 
 func getStartActivityScore(activityID:String, domInfo, subInfo):
