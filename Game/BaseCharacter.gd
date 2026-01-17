@@ -1345,6 +1345,11 @@ func onFluidObsorb(orificeType, cumType, howMuch, fluidDNA):
 
 func getMenstrualCycle():
 	return menstrualCycle
+	
+func isEggStuffed() -> bool:
+	if(menstrualCycle != null):
+		return menstrualCycle.isEggStuffed()
+	return false
 
 func isPregnant() -> bool:
 	if(menstrualCycle != null):
@@ -1354,6 +1359,11 @@ func isPregnant() -> bool:
 func isPregnantFrom(_charID:String) -> bool:
 	if(menstrualCycle != null):
 		return menstrualCycle.isPregnantFrom(_charID)
+	return false
+
+func isVisiblyEggStuffed() -> bool:
+	if(menstrualCycle != null):
+		return menstrualCycle.isVisiblyEggStuffed()
 	return false
 
 func isVisiblyPregnant() -> bool:
@@ -1786,7 +1796,7 @@ func softUpdateDoll(doll: Doll3D):
 	else:
 		doll.setState("breasts", "flat")
 
-	var pregnancyValue:float = clamp(getPregnancyProgress(), 0.0, 1.0)
+	var pregnancyValue:float = clamp(getPregnancyProgressDoll(), 0.0, 1.0)
 	
 	var pregnancyKidAmount = getPregnancyLitterSize()
 	var extraKidsMult = 1.0

@@ -92,14 +92,13 @@ func getTimeUntilReadyForBirth() -> int:
 	var currentProgress := min(1.0, getProgress())
 	return int(gestationTime * (1.0 - currentProgress))
 
-func processTime(seconds:int):
-	
+func processTime(seconds:float): #seconds is float because pregnancy speed is float
+	var ispeed:int = int(ceil(seconds))
 	if(!isimpregnated):
-		lifeSpan -= seconds
+		lifeSpan -= ispeed
 		if(lifeSpan < 0):
 			removeMe()
-	
-	if(isimpregnated):
+	else:
 		if(tentacleEggType == TentacleEggType.NONE):
 			var newProgress: float = float(seconds) / getGestationTime()
 			
@@ -111,7 +110,7 @@ func processTime(seconds:int):
 				progress = 2.5
 
 		else: # Tentacle eggs
-			lifeSpan -= seconds # Lifespan is the grow time for tentacle eggs
+			lifeSpan -= ispeed # Lifespan is the grow time for tentacle eggs
 			if(lifeSpan <= 0):
 				fetusReadyForBirth = true
 

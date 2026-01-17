@@ -148,14 +148,14 @@ static func getTimeStringHumanReadable(t):
 	var _hours = floor(fmod(t/3600.0, 24.0))
 	var _days = floor(t/(3600.0*24.0))
 	
-	var result = ""
+	var result:String = ""
 	if(_days > 0):
 		result += str(_days)+" days "
 	if(_hours > 0):
 		result += str(_hours)+"h "
 	if(_minutes > 0):
 		result += str(_minutes)+"m "
-	if(_seconds > 0):
+	if(_seconds > 0 || result.empty()):
 		result += str(_seconds)+"s "
 	return result.trim_suffix(" ")
 

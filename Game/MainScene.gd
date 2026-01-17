@@ -1153,11 +1153,27 @@ func showLog():
 		return true
 	return false
 
-func checkTFs():
+func checkTFs() -> bool:
 	var tfHolder = GM.pc.getTFHolder()
 	if(tfHolder != null && tfHolder.hasPendingTransformations()):
 		runScene("PlayerTFScene")
 		return true
+	return false
+
+func checkLayEggs() -> bool:
+	var mensCycle:MenstrualCycle = GM.pc.getMenstrualCycle()
+	if(mensCycle && mensCycle.isReadyToLayEggs()):
+		runScene("PlayerWantsToLayEggsScene")
+		return true
+	return false
+
+func checkExtraScenes(_checkTFs:bool = true, _checkLayEggs:bool = true) -> bool:
+	if(_checkTFs):
+		if(checkTFs()):
+			return true
+	if(_checkLayEggs):
+		if(checkLayEggs()):
+			return true
 	return false
 
 func getLogMessages():

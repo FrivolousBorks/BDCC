@@ -5,6 +5,7 @@ var cycleProgress: float = 0.0
 var character = null
 var eggCells:Dictionary = {}
 var impregnatedEggCells:Array = []
+var bigEggs:Array = []
 var ovulatedThisCycle:bool = false
 var noticedVisiblyPregnant:bool = false
 var noticedHeavyIntoPregnancy:bool = false
@@ -85,6 +86,8 @@ func isInHeat() -> bool:
 		return false
 	if(getPregnancyProgress() > 0.05 && !isEligibleForProlongedPregnancy()):
 		return false
+	if(isEggStuffed()): # Feeling of fullness tricks your body into thinking that you're pregnant. So no heat
+		return false
 	
 	return true
 
@@ -93,13 +96,13 @@ func forceIntoHeat():
 	cycleProgress = 0.36
 
 func forceOvulate() -> bool:
-	if(ovulatedThisCycle || isPregnant()):
+	if(ovulatedThisCycle || isPregnant() || isEggStuffed()):
 		return false
 	ovulate()
 	return true
 
 func shouldOvulate() -> bool:
-	if(!ovulatedThisCycle && cycleProgress >= willOvulateAt && (!isPregnant() || isEligibleForProlongedPregnancy())):
+	if(!ovulatedThisCycle && cycleProgress >= willOvulateAt && !isEggStuffed() && (!isPregnant() || isEligibleForProlongedPregnancy())):
 		return true
 	return false
 
@@ -138,7 +141,7 @@ func getPregnancySpeed() -> float:
 	pregnancySpeed = clamp(pregnancySpeed, 0.1, 100.0)
 	return pregnancySpeed
 
-func processTime(seconds):
+func processTime(seconds:int):
 	var theCharacter = getCharacter()
 	
 	if(isPregnant()):
@@ -158,7 +161,7 @@ func processTime(seconds):
 	if(!hasAnyWomb()):
 		cycleProgress = 0.0	
 	elif(!isPregnant() || (theCharacter != null && theCharacter.hasPerk(Perk.FertilityBetterOvulationV3))):
-		var add = float(seconds)/float(getCycleLength())
+		var add:float = float(seconds)/float(getCycleLength())
 		
 		cycleProgress += add
 		while(cycleProgress >= 1.0):
@@ -168,18 +171,27 @@ func processTime(seconds):
 		if(shouldOvulate()):
 			ovulate()
 	
-	if(impregnatedEggCells.size() > 0):
-		var pregnancySpeed = getPregnancySpeed()
+	var pregnancySpeed:float = 1.0
+	var hasAnyImpregCells:bool = !impregnatedEggCells.empty()
+	var hasAnyBigEggs:bool = !bigEggs.empty()
+	if(hasAnyImpregCells || hasAnyBigEggs): # speed is costly to calculate
+		pregnancySpeed = getPregnancySpeed()
 		
+	if(hasAnyImpregCells):
 		var readyFetusAmount: = 0
 		for egg in impregnatedEggCells:
 			egg.processTime(seconds * pregnancySpeed)
 			if(egg.fetusIsReadyForBirth()):
 				readyFetusAmount += 1
-	
+		
 		if(readyFetusAmount == impregnatedEggCells.size() && !noticedReadyToGiveBirth):
 			noticedReadyToGiveBirth = true
 			emit_signal("readyToGiveBirthOnce")
+
+	if(hasAnyBigEggs):
+		#TODO: Ready to lay eggs check?
+		for bigEgg in bigEggs:
+			bigEgg.processTime(seconds * pregnancySpeed)
 	
 	for orificeType in eggCells:
 		for egg in eggCells[orificeType]:
@@ -256,6 +268,7 @@ func ovulate():
 func removeEgg(egg:EggCell):
 	eggCells[egg.getOrifice()].erase(egg)
 	impregnatedEggCells.erase(egg)
+	bigEggs.erase(egg)
 	#print("EGG DIED")
 	
 func obsorbCum(_cumType, amountML:float, fluidDNA, orificeType:int = OrificeType.Vagina):
@@ -271,12 +284,14 @@ func obsorbCum(_cumType, amountML:float, fluidDNA, orificeType:int = OrificeType
 		var egg = RNG.pick(eggCells[orificeType])
 		if(egg.tryImpregnate(fluidDNA, amountML, eggAmountMult, fertility, crossSpeciesCompatibility)):
 			eggCells[orificeType].erase(egg)
+			#TODO: is egg big check. Put into big eggs then
 			impregnatedEggCells.append(egg)
 
+func isEggStuffed() -> bool:
+	return !bigEggs.empty()
+
 func isPregnant() -> bool:
-	if(impregnatedEggCells.size() > 0):
-		return true
-	return false
+	return !impregnatedEggCells.empty()
 
 func isPregnantFromPlayer() -> bool:
 	if(!isPregnant()):
@@ -306,14 +321,11 @@ func getPregnancyProgress() -> float:
 	#	print("PREGNANCY: "+str(maxProgress))
 	return maxProgress
 
-
 func getPregnancyProgressDoll() -> float:
-	var bigEggAmount:int = 0
-	for egg in impregnatedEggCells: # 10 big eggs -> doll looks fully pregnant
-		if(egg.bigEgg):
-			bigEggAmount += 1
-	
-	return max(getPregnancyProgress(), min(bigEggAmount*0.1, 1.0))
+	var bigEggAmount:int = bigEggs.size() 
+	var bigEggPregnancyProgress:float = min(bigEggAmount*0.1, 1.0) # 10 big eggs -> doll looks fully pregnant
+	var theNormalPregnancyProgress:float = getPregnancyProgress()
+	return max(theNormalPregnancyProgress, bigEggPregnancyProgress)
 
 func isReadyToGiveBirth() -> bool:
 	var readyFetusAmount:int = 0
@@ -327,7 +339,7 @@ func isReadyToGiveBirth() -> bool:
 		return false
 
 func isReadyToLayEggs() -> bool:
-	for egg in impregnatedEggCells:
+	for egg in bigEggs:
 		if(egg.isReadyToBeLaid()):
 			return true
 	return false
@@ -356,7 +368,7 @@ func addTentacleEgg(_charID:String, _tentacleType:int, _growTime:int, _orifice:i
 	egg.tentacleEggType = _tentacleType
 	egg.lifeSpan = _growTime
 	
-	impregnatedEggCells.append(egg)
+	bigEggs.append(egg)
 	return true
 
 func getLitterSize() -> int:
@@ -403,6 +415,20 @@ func getTimeUntilReadyForBirth() -> int:
 			maxTime = newMaxTime
 	return int(ceil(maxTime / getPregnancySpeed()))
 
+func getAmountOfEggsReadyToBeLaid() -> int:
+	var _result:int = 0
+	
+	for egg in bigEggs:
+		if(egg.isReadyToBeLaid()):
+			_result += 1
+	
+	return _result
+
+func isVisiblyEggStuffed() -> bool:
+	if(!bigEggs.empty()):
+		return true
+	return false
+
 func isVisiblyPregnant() -> bool:
 	if(getPregnancyProgress() >= 0.20):
 		return true
@@ -428,13 +454,19 @@ func saveData():
 		"noticedReadyToGiveBirth": noticedReadyToGiveBirth,
 		"noticedHeavyIntoPregnancy": noticedHeavyIntoPregnancy,
 	}
-	var eggData = []
+	var eggData:Array = []
 	for orificeType in eggCells:
 		for egg in eggCells[orificeType]:
 			eggData.append(egg.saveData())
 	for egg in impregnatedEggCells:
 		eggData.append(egg.saveData())
 	data["eggCells"] = eggData
+	
+	if(!bigEggs.empty()):
+		var bigEggData:Array = []
+		for egg in bigEggs:
+			bigEggData.append(egg.saveData())
+		data["bigEggs"] = eggData
 	
 	return data
 
@@ -448,6 +480,7 @@ func loadData(data):
 
 	impregnatedEggCells.clear()
 	eggCells.clear()
+	bigEggs.clear()
 	for orificeType in OrificeType.getAll():
 		eggCells[orificeType] = []
 		
@@ -462,7 +495,14 @@ func loadData(data):
 			var orifice:int = egg.getOrifice()
 			if(eggCells.has(orifice)):
 				eggCells[orifice].append(egg)
-			
+	
+	if(data.has("bigEggs")):
+		var bigEggData:Array = SAVE.loadVar(data, "bigEggs", [])
+		for eggD in bigEggData:
+			var egg := createEggCell()
+			egg.loadData(eggD)
+			bigEggs.append(egg)
+	
 func getRoughChanceOfBecomingPregnant() -> float:
 	if(isVisiblyPregnant()):
 		return 0.0
@@ -481,6 +521,23 @@ func speedUpPregnancy():
 		#eggCell.progress = 0.99
 		#eggCell.processTime(60*60*24)
 		eggCell.progress = 1.0
+
+func layEggs() -> Array:
+	if(bigEggs.empty()):
+		return []
+	var result:Array = []
+	
+	var eggAm:int = bigEggs.size()
+	for _i in eggAm:
+		var _indx:int = eggAm-1-_i
+		var egg:EggCell = bigEggs[_indx]
+		
+		if(egg.isReadyToBeLaid()):
+			result.append(egg)
+			#TODO: Fill the result with better info
+			bigEggs.remove(_indx)
+	
+	return result
 
 func giveBirth() -> Array:
 	if(impregnatedEggCells.size() <= 0):
