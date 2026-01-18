@@ -113,6 +113,26 @@ func processTime(seconds:float): #seconds is float because pregnancy speed is fl
 			lifeSpan -= ispeed # Lifespan is the grow time for tentacle eggs
 			if(lifeSpan <= 0):
 				fetusReadyForBirth = true
+				lifeSpan = 0
+
+func delayEgg(_time:int):
+	if(tentacleEggType == TentacleEggType.NONE):
+		var theGestTime := getGestationTime()
+		var adjustedTime:float = float(_time) / float(theGestTime)
+		progress = clamp(1.0 - adjustedTime, 0.0, 1.0)
+	else:
+		if(lifeSpan < _time):
+			lifeSpan = _time
+	if(_time > 0):
+		fetusReadyForBirth = false
+
+func getTimeUntilReadyToBeLaid() -> int:
+	if(tentacleEggType == TentacleEggType.NONE):
+		var theGestTime := getGestationTime()
+		var progressLeft:float = 1.0 - progress
+		return int(theGestTime * progressLeft)
+	else:
+		return lifeSpan
 
 func fetusIsReadyForBirth() -> bool:
 	if(tentacleEggType != TentacleEggType.NONE): # Tentacle eggs work differnetly

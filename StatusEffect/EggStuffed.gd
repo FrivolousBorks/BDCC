@@ -20,8 +20,11 @@ func getEffectDesc():
 	var theMenstrualCycle:MenstrualCycle = character.getMenstrualCycle()
 	if(!theMenstrualCycle):
 		return "You are stuffed with eggs.."
-
-	return "You are stuffed with "+str(theMenstrualCycle.bigEggs.size())+" eggs.. "
+	
+	var theTimeUntilEggs:int = theMenstrualCycle.getTimeUntilNextEggLaying()
+	var eggAm:int = theMenstrualCycle.bigEggs.size()
+	
+	return "You are stuffed with "+str(eggAm)+" egg"+("s" if eggAm != 1 else "")+".. "+Util.getTimeStringHumanReadable(theTimeUntilEggs)+" left until you will want to lay "+("them." if eggAm != 1 else "it.")
 
 func getEffectImage():
 	return "res://Images/StatusEffects/mother.png"

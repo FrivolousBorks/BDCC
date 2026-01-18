@@ -32,6 +32,14 @@ func _run():
 		
 		saynn("YOU LAYED "+str(eggsToLay)+" EGGS!")
 		
+		saynn("REPORT:\n"+eggReport)
+		
+		addButton("Continue", "Time to go..", "endthescene")
+	
+	if(state == "after_clenching"):
+		playAnimation(StageScene.TFLook, "crotch")
+		
+		saynn("YOU CLENCH BUT IT USES A LOT OF STAMINA!")
 		addButton("Continue", "Time to go..", "endthescene")
 	
 func _react(_action: String, _args):
@@ -44,6 +52,9 @@ func _react(_action: String, _args):
 		else:
 			GM.pc.addStamina(-30)
 			setState("after_clenching")
+			var menstrualCycle:MenstrualCycle = GM.pc.getMenstrualCycle()
+			if(menstrualCycle):
+				menstrualCycle.delayEggs()
 		return
 		
 	if(_action == "start_laying_eggs"):
@@ -54,7 +65,8 @@ func _react(_action: String, _args):
 	if(_action == "doLay"):
 		var menstrualCycle:MenstrualCycle = GM.pc.getMenstrualCycle()
 		if(menstrualCycle):
-			menstrualCycle.layEggs()
+			var theEggs:Array = menstrualCycle.layEggs()
+			eggReport = menstrualCycle.generateLayEggsReport(theEggs)
 		processTime(10*60)
 	
 	setState(_action)

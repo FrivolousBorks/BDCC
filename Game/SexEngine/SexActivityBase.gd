@@ -2260,7 +2260,7 @@ func getNameHole(_indx:int, _hole:String) -> String:
 	if(_hole == S_ANUS):
 		return RNG.pick(["anus", "tailhole", "backdoor", "star", "anal ring"])
 	if(_hole == S_MOUTH):
-		return RNG.pick(["mouth", "face", "throat"])
+		return RNG.pick(["mouth", "throat"])
 	return "[color=red]error[/color]"
 
 func getNameHoleGeneric(_hole:String) -> String:
@@ -2269,7 +2269,7 @@ func getNameHoleGeneric(_hole:String) -> String:
 	if(_hole == S_ANUS):
 		return RNG.pick(["anus", "tailhole", "backdoor", "star", "anal ring"])
 	if(_hole == S_MOUTH):
-		return RNG.pick(["mouth", "face", "throat"])
+		return RNG.pick(["mouth", "throat"])
 	return "[color=red]error[/color]"
 
 func doProcessFuck(_indxTop:int, _indxBottom:int, _hole:String, _poseDescriptor:String = ""):
@@ -3325,3 +3325,44 @@ func rubWithFeet(_indxWho:int, _indxTarget:int, _hole:String):
 				" {sub.You} can't hold back much longer!"
 			])
 	addTextRaw(text.replace("{dom.", "{"+theChar.getID()+".").replace("{sub.", "{"+target.getID()+"."))
+
+func stuffTentacleEgg(_indx:int, _hole:String, _addMessage:bool = true, _tentacleIndx:int=DOM_0) -> bool:
+	var theChar:BaseCharacter = getDomOrSub(_indx)
+	if(!theChar):
+		return false
+	var theMenstrualCycle:MenstrualCycle = theChar.getMenstrualCycle()
+	if(!theMenstrualCycle):
+		return false
+	var theSexType = getSexEngine().getSexType()
+	if(theSexType.id != SexType.TentaclesSex):
+		return false
+	var theTentacleType:int = theSexType.tentacleType
+	var theEggTime:int = theSexType.eggTime
+	var theOrifice:int = OrificeType.fromBodypart(_hole)
+	if(theOrifice < 0):
+		return false
+	var theResult:bool = theMenstrualCycle.addTentacleEgg(getDomOrSubID(_tentacleIndx), theTentacleType, theEggTime, theOrifice)
+	
+	if(theResult && _addMessage):
+		var theHoleName:String = "somewhere"
+		if(_hole == S_VAGINA):
+			theHoleName = "into {<TARGET>.your} vagina"
+		elif(_hole == S_ANUS):
+			theHoleName = "down {<TARGET>.your} "+RNG.pick(["tailhole", "asshole"])
+		elif(_hole == S_MOUTH):
+			theHoleName = "down {<TARGET>.your} throat"
+		addTextRaw("[b]An egg gets stuffed "+(theHoleName.replace("<TARGET>", theChar.getID()))+"![/b]")
+	
+	return theResult
+	
+func stuffTentacleEggRandomHole(_indx:int, _addMessage:bool = true, _tentacleIndx:int=DOM_0) -> bool:
+	var possibleHoles:Array = [BodypartSlot.Anus, BodypartSlot.Anus, BodypartSlot.Head] # Anus is 2x as likely to be picked
+	if(getDomOrSub(_indx).hasReachableVagina()):
+		possibleHoles.append(BodypartSlot.Vagina) # Vagina is 4x time as likely to be picked
+		possibleHoles.append(BodypartSlot.Vagina)
+		possibleHoles.append(BodypartSlot.Vagina)
+		possibleHoles.append(BodypartSlot.Vagina)
+	
+	var theHole:String = RNG.pick(possibleHoles)
+	
+	return stuffTentacleEgg(_indx, theHole, _addMessage, _tentacleIndx)

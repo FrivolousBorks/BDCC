@@ -415,14 +415,32 @@ func getTimeUntilReadyForBirth() -> int:
 			maxTime = newMaxTime
 	return int(ceil(maxTime / getPregnancySpeed()))
 
-func getAmountOfEggsReadyToBeLaid() -> int:
-	var _result:int = 0
+func getAmountOfEggsReadyToBeLaid(_time:int = 30*60) -> int:
+	return getEggsToBeLaid(_time).size()
+
+func delayEggs(_time:int = 3*60*60):
+	for egg in bigEggs:
+		egg.delayEgg(_time)
+
+func getTimeUntilNextEggLaying() -> int:
+	if(bigEggs.empty()):
+		return 0
+	var theTime:int = bigEggs[0].getTimeUntilReadyToBeLaid()
+	for egg in bigEggs:
+		var theNewTime:int = egg.getTimeUntilReadyToBeLaid()
+		if(theNewTime < theTime):
+			theTime = theNewTime
+	return theTime
+
+func getEggsToBeLaid(_time:int = 30*60) -> Array:
+	var result:Array = []
 	
 	for egg in bigEggs:
-		if(egg.isReadyToBeLaid()):
-			_result += 1
-	
-	return _result
+		var theEggTime:int = egg.getTimeUntilReadyToBeLaid()
+		if(theEggTime <= _time):
+			result.append(egg)
+
+	return result
 
 func isVisiblyEggStuffed() -> bool:
 	if(!bigEggs.empty()):
@@ -522,22 +540,45 @@ func speedUpPregnancy():
 		#eggCell.processTime(60*60*24)
 		eggCell.progress = 1.0
 
-func layEggs() -> Array:
+func layEggs(_time:int = 30*60, _isAtNursery:bool = false) -> Array:
 	if(bigEggs.empty()):
 		return []
+	
+	var theChar = getCharacter()
+	if(!theChar):
+		return []
+	var _isPc:bool = theChar.isPlayer()
+	var readyEggs:Array = getEggsToBeLaid(_time)
 	var result:Array = []
-	
-	var eggAm:int = bigEggs.size()
-	for _i in eggAm:
-		var _indx:int = eggAm-1-_i
-		var egg:EggCell = bigEggs[_indx]
+	for egg in readyEggs:
+		result.append(egg)
 		
-		if(egg.isReadyToBeLaid()):
-			result.append(egg)
-			#TODO: Fill the result with better info
-			bigEggs.remove(_indx)
-	
+		var theEggType:int = egg.tentacleEggType
+		if(theEggType == TentacleEggType.Plant):
+			if(_isPc):
+				var newEggItem = GlobalRegistry.createItem("PlantEgg")
+				newEggItem.whoGaveBirth = theChar.getID()
+				theChar.getInventory().addItem(newEggItem)
+		
+		#TODO: Fill the result with better info
+		bigEggs.erase(egg)
 	return result
+
+func generateLayEggsReport(_eggs:Array, _isAtNursery:bool = false) -> String:
+	if(_eggs.empty()):
+		return ""
+	var resultLines:Array = []
+	
+	for egg in _eggs:
+		var theEggType:int = egg.tentacleEggType
+		if(theEggType == TentacleEggType.NONE):
+			resultLines.append("LIVE EGG!") #TODO: Make this write the child info and stuff
+		elif(theEggType == TentacleEggType.Plant):
+			resultLines.append("1x Plant egg. Added to your inventory")
+		else:
+			resultLines.append("1x Unknown egg. Dissolved by itself")
+	
+	return Util.join(resultLines, "\n")
 
 func giveBirth() -> Array:
 	if(impregnatedEggCells.size() <= 0):

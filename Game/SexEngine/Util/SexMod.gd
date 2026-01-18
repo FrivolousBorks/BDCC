@@ -17,3 +17,4 @@ const DisableTFPills = "noTFPills"
 const NoViolence = "noViolence"
 
 const TentacleMonsterType = "TentacleMonsterType"
+const TentacleEggTime = "TentacleEggTime"

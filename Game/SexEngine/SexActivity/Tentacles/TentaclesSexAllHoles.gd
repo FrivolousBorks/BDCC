@@ -1,6 +1,7 @@
 extends SexActivityBase
 
 var currentPose:String = ""
+var isStuffing:bool = false
 
 const POSE_ALLHOLES = "allholes"
 const POSE_CUDDLEFUCK = "cuddlefuck"
@@ -52,7 +53,9 @@ func getGoals():
 	if(currentPose == POSE_CHOKEFUCK):
 		return {
 			SexGoal.ChokeSexVaginal: 1.0,
+			SexGoal.ChokeSexAnal: 1.0,
 			SexGoal.FuckVaginal: 1.0,
+			SexGoal.FuckAnal: 1.0,
 		}
 	return {
 		SexGoal.FuckVaginal: 1.0,
@@ -108,6 +111,8 @@ func onSwitchFrom(_otherActivity, _args):
 	currentPose = RNG.pick(getAvaiablePoses())
 
 func processTurn():
+	if(state == ""):
+		isStuffing = false
 	return
 
 func inside_processTurn():
@@ -145,6 +150,9 @@ func sex_processTurn():
 			
 		])
 	addTextPick(possible)
+	
+	if(isStuffing):
+		stuffTentacleEggRandomHole(SUB_0)
 	
 	var possibleExtra:Array = []
 	if(getSubInfo().isCloseToCumming()):
@@ -186,9 +194,19 @@ func getActions(_indx:int):
 				addAction("penetrate", 1.0, "Penetrate", "Try to start fucking them!", {A_PRIORITY: 5})
 		if(state == "sex" && !checkActiveDomPC(_indx)):
 			addAction("pause", getPauseSexScore(_indx, SUB_0, S_ANUS), "Slow down", "Pause the fucking", {A_PRIORITY: 1})
-		
+			
+			if(isStuffing):
+				addAction("stopStuff", 0.0, "Stop egg-stuffing", "Enough stuffing eggs into the sub")
+			else:
+				var theStartScore:float = getDomInfo().getArousal()
+				if(theStartScore < 0.4):
+					theStartScore = 0.0
+				addAction("startStuff", theStartScore, "Start egg-stuffing", "Start stuffing eggs into the sub's holes!")
+			
 		if(state == "sex" && isReadyToCumHandled(DOM_0)):
 			addAction("cum", 1.0, "Cum inside", "Cum inside them!", {A_PRIORITY: 1001})
+			if(isStuffing):
+				addAction("donothing", 1.0, "Keep stuffing", "Keep stuffing the sub with eggs!", {A_PRIORITY: 1001})
 		elif(state == "sex" && isReadyToCumHandled(SUB_0) && !canDoActions(SUB_0) && !checkActiveDomPC(_indx)):
 			addAction("subcum", 1.0, "Sub orgasm!", "They are about to cum!", {A_PRIORITY: 1001})
 		
@@ -208,7 +226,16 @@ func getActions(_indx:int):
 				addAction("subcum", 1.0, "Cum!", "You're about to cum!", {A_PRIORITY: 1001})
 
 func doAction(_indx:int, _id:String, _action:Dictionary):
+	if(_id == "startStuff"):
+		isStuffing = true
+		addText("The tentacles have began stuffing eggs into {sub.your} holes!")
+	if(_id == "stopStuff"):
+		isStuffing = false
+		addText("The tentacles have stopped stuffing eggs into {sub.your} holes.")
+	
+	
 	if(_id == "cum"):
+		isStuffing = false
 		stimulate(DOM_0, S_PENIS, SUB_0, S_VAGINA, I_NORMAL, Fetish.VaginalSexGiving)
 		stimulate(DOM_0, S_PENIS, SUB_0, S_ANUS, I_NORMAL, Fetish.AnalSexGiving)
 		var orgAmount:int = 0
@@ -375,6 +402,7 @@ func saveData():
 	var data = .saveData()
 	
 	data["currentPose"] = currentPose
+	data["isStuffing"] = isStuffing
 
 	return data
 	
@@ -384,3 +412,4 @@ func loadData(data):
 	currentPose = SAVE.loadVar(data, "currentPose", "")
 	if(currentPose == ""):
 		currentPose = RNG.pick(getAvaiablePoses())
+	isStuffing = SAVE.loadVar(data, "isStuffing", false)

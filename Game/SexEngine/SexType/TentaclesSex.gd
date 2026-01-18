@@ -1,6 +1,7 @@
 extends SexTypeBase
 
 var tentacleType:int = TentacleEggType.Plant
+var eggTime:int = 12*60*60
 
 func _init():
 	id = SexType.TentaclesSex
@@ -13,6 +14,8 @@ func processArgs(_args:Dictionary):
 func initArgs(_args = {}):
 	if(_args.has(SexMod.TentacleMonsterType)):
 		tentacleType = _args[SexMod.TentacleMonsterType]
+	if(_args.has(SexMod.TentacleEggTime)):
+		eggTime = _args[SexMod.TentacleEggTime]
 
 func getDefaultAnimation():
 	var sexEngine = getSexEngine()
@@ -40,7 +43,9 @@ func processAnimationArgs(_args:Dictionary):
 func saveData():
 	return {
 		tentacleType = tentacleType,
+		eggTime = eggTime,
 	}
 
 func loadData(_data):
 	tentacleType = SAVE.loadVar(_data, "tentacleType", TentacleEggType.Plant)
+	eggTime = SAVE.loadVar(_data, "eggTime", 12*60*60)
