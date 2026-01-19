@@ -175,11 +175,11 @@ func doAction(_indx:int, _actionID:String, _action:Dictionary):
 		addText("{dom.You} {dom.youVerb('raise')} {sub.yourHis} leg, preparing to fuck {sub.yourHis} {anus}.")
 		react(SexReaction.StartChokeFuck)
 	if(_actionID == "startvagtentacles"):
-		switchCurrentActivityTo("TentaclesSexAllHoles", ["choke"])
+		switchCurrentActivityTo("TentaclesSexVag", ["choke"])
 		addText("{dom.You} {dom.youVerb('raise')} {sub.yourHis} leg, preparing to fuck {sub.yourHis} {pussy}.")
 		react(SexReaction.StartChokeFuck)
 	if(_actionID == "startanaltentacles"):
-		switchCurrentActivityTo("TentaclesSexAllHoles", ["choke"])
+		switchCurrentActivityTo("TentaclesSexAnal", ["choke"])
 		addText("{dom.You} {dom.youVerb('raise')} {sub.yourHis} leg, preparing to fuck {sub.yourHis} {anus}.")
 		react(SexReaction.StartChokeFuck)
 	if(_actionID == "startridevag"):

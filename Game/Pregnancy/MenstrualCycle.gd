@@ -344,6 +344,14 @@ func isReadyToLayEggs() -> bool:
 			return true
 	return false
 
+func hasEggsInOrifice(_orifice:int, _onlyTentacle:bool = false) -> bool:
+	for egg in bigEggs:
+		if(egg.orificeType == _orifice):
+			if(_onlyTentacle && egg.tentacleEggType == TentacleEggType.NONE):
+				continue
+			return true
+	return false
+
 func addTentacleEgg(_charID:String, _tentacleType:int, _growTime:int, _orifice:int) -> bool:
 	if(!hasOrifice(_orifice)):
 		return false
@@ -484,7 +492,7 @@ func saveData():
 		var bigEggData:Array = []
 		for egg in bigEggs:
 			bigEggData.append(egg.saveData())
-		data["bigEggs"] = eggData
+		data["bigEggs"] = bigEggData
 	
 	return data
 

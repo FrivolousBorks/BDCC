@@ -39,6 +39,12 @@ func getDefaultAnimation():
 func processAnimationArgs(_args:Dictionary):
 	if(tentacleType == TentacleEggType.Plant):
 		_args["plant"] = true
+	
+	var sexEngine = getSexEngine()
+	if(!sexEngine.doms.empty()):
+		var theInfo = sexEngine.doms[sexEngine.doms.keys()[0]]
+		if(theInfo && theInfo.didJustCame()):
+			_args["cum"] = true
 
 func saveData():
 	return {

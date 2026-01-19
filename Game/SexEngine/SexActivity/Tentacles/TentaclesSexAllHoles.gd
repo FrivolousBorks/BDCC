@@ -4,42 +4,17 @@ var currentPose:String = ""
 var isStuffing:bool = false
 
 const POSE_ALLHOLES = "allholes"
-const POSE_CUDDLEFUCK = "cuddlefuck"
-const POSE_BONDAGEFUCK = "bondagefuck"
-const POSE_CHOKEFUCK = "chokefuck"
 
-#TODO: IS VAG SWITCH
-
-#TODO: Switch/start text
 const POSES = {
 	POSE_ALLHOLES: {
 		name = "All holes",
 		anim = StageScene.TentaclesSex,
 		anims = ["tease", "inside", "sex", "fast"],
-		isAllHoles = true,
-	},
-	POSE_CUDDLEFUCK: {
-		name = "Cuddle-fuck",
-		anim = StageScene.TentaclesCuddle,
-		anims = ["tease", "inside", "sex", "fast"],
-	},
-	POSE_BONDAGEFUCK: {
-		name = "Bound-fuck",
-		anim = StageScene.TentaclesBondage,
-		anims = ["tease", "inside", "sex", "fast"],
-	},
-	POSE_CHOKEFUCK: {
-		name = "Choke-fuck",
-		anim = StageScene.TentaclesChoke,
-		anims = ["sextease", "sexinside", "sex", "sexfast"],
 	},
 }
 
 func getAvaiablePoses() -> Array:
-	if(currentPose == POSE_CHOKEFUCK):
-		return [POSE_CHOKEFUCK]
-	
-	return [POSE_ALLHOLES, POSE_CUDDLEFUCK, POSE_BONDAGEFUCK]
+	return [POSE_ALLHOLES]
 
 func _init():
 	id = "TentaclesSexAllHoles"
@@ -50,13 +25,6 @@ func _init():
 
 
 func getGoals():
-	if(currentPose == POSE_CHOKEFUCK):
-		return {
-			SexGoal.ChokeSexVaginal: 1.0,
-			SexGoal.ChokeSexAnal: 1.0,
-			SexGoal.FuckVaginal: 1.0,
-			SexGoal.FuckAnal: 1.0,
-		}
 	return {
 		SexGoal.FuckVaginal: 1.0,
 		SexGoal.FuckAnal: 1.0,
@@ -105,9 +73,6 @@ func startActivity(_args):
 	addText("{dom.You} {dom.youVerb('grab')} {sub.you} and {dom.youVerb('raise')} {sub.youHim} above the floor, {dom.yourHis} tentacles are pressed against all {sub.yourHis} holes at once!")
 
 func onSwitchFrom(_otherActivity, _args):
-	if(_args != null && _args == ["choke"]):
-		currentPose = POSE_CHOKEFUCK
-		return
 	currentPose = RNG.pick(getAvaiablePoses())
 
 func processTurn():
@@ -121,12 +86,18 @@ func inside_processTurn():
 		"{sub.Your} holes are all stuffed full of tentacles.",
 		"{sub.Your} holes are keeping the tentacles warm.",
 	])
-	stimulateSex(DOM_0, SUB_0, S_VAGINA, I_TEASE, SPEED_VERYSLOW)
-	stimulateSex(DOM_0, SUB_0, S_ANUS, I_TEASE, SPEED_VERYSLOW)
+	if(getSub().hasReachableVagina()):
+		stimulateSex(DOM_0, SUB_0, S_VAGINA, I_TEASE, SPEED_VERYSLOW)
+		stimulateSex(DOM_0, SUB_0, S_ANUS, I_TEASE, SPEED_VERYSLOW)
+	else:
+		stimulateSex(DOM_0, SUB_0, S_ANUS, I_TEASE, SPEED_SLOW)
 
 func sex_processTurn():
-	stimulateSex(DOM_0, SUB_0, S_VAGINA, I_NORMAL, SPEED_VERYSLOW)
-	stimulateSex(DOM_0, SUB_0, S_ANUS, I_NORMAL, SPEED_VERYSLOW)
+	if(getSub().hasReachableVagina()):
+		stimulateSex(DOM_0, SUB_0, S_VAGINA, I_NORMAL, SPEED_VERYSLOW)
+		stimulateSex(DOM_0, SUB_0, S_ANUS, I_NORMAL, SPEED_VERYSLOW)
+	else:
+		stimulateSex(DOM_0, SUB_0, S_ANUS, I_NORMAL, SPEED_SLOW)
 	stimulateSex(DOM_0, SUB_0, S_MOUTH, I_NORMAL, SPEED_VERYSLOW)
 	
 	var possible:Array = [
@@ -178,14 +149,18 @@ func sex_processTurn():
 	if(RNG.chance(possibleExtra.size()*10)):
 		addTextPick(possibleExtra)
 
-#TODO: Fix the getPauseSexScore and getContinueSexScore here?
-
 func getActions(_indx:int):
 	if(_indx == DOM_0):
 		addAction("stop", getStopScore(), "Stop sex", "Stop the sex")
 		
 		if(state == "inside" && !checkActiveDomPC(_indx)):
-			addAction("fuckMore", getContinueSexScore(_indx, SUB_0, S_ANUS)-getStopScore(), "Continue fucking", "Start fucking them again")
+			var continueScoreFinal:float = 0.0
+			if(getSub().hasReachableVagina()):
+				continueScoreFinal = min(getContinueSexScore(_indx, SUB_0, S_ANUS), getContinueSexScore(_indx, SUB_0, S_VAGINA))
+			else:
+				continueScoreFinal = getContinueSexScore(_indx, SUB_0, S_ANUS)
+			
+			addAction("fuckMore", continueScoreFinal-getStopScore(), "Continue fucking", "Start fucking them again")
 			addAction("pullOut", getStopScore(), "Pull out", "Pull your member out")
 		
 		if(state == ""):
@@ -193,7 +168,12 @@ func getActions(_indx:int):
 			if(hasBodypartUncovered(SUB_0, S_VAGINA) && hasBodypartUncovered(SUB_0, S_ANUS) && !getSub().isOralBlocked() && !checkActiveDomPC(_indx)):
 				addAction("penetrate", 1.0, "Penetrate", "Try to start fucking them!", {A_PRIORITY: 5})
 		if(state == "sex" && !checkActiveDomPC(_indx)):
-			addAction("pause", getPauseSexScore(_indx, SUB_0, S_ANUS), "Slow down", "Pause the fucking", {A_PRIORITY: 1})
+			var pauseScoreFinal:float = 0.0
+			if(getSub().hasReachableVagina()):
+				pauseScoreFinal = max(getPauseSexScore(_indx, SUB_0, S_ANUS), getPauseSexScore(_indx, SUB_0, S_VAGINA))
+			else:
+				pauseScoreFinal = getPauseSexScore(_indx, SUB_0, S_ANUS)
+			addAction("pause", pauseScoreFinal, "Slow down", "Pause the fucking", {A_PRIORITY: 1})
 			
 			if(isStuffing):
 				addAction("stopStuff", 0.0, "Stop egg-stuffing", "Enough stuffing eggs into the sub")
@@ -236,7 +216,8 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 	
 	if(_id == "cum"):
 		isStuffing = false
-		stimulate(DOM_0, S_PENIS, SUB_0, S_VAGINA, I_NORMAL, Fetish.VaginalSexGiving)
+		if(getSub().hasReachableVagina()):
+			stimulate(DOM_0, S_PENIS, SUB_0, S_VAGINA, I_NORMAL, Fetish.VaginalSexGiving)
 		stimulate(DOM_0, S_PENIS, SUB_0, S_ANUS, I_NORMAL, Fetish.AnalSexGiving)
 		var orgAmount:int = 0
 		if(isReadyToCumHandled(DOM_0)):
@@ -256,24 +237,28 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 			addText("[b]The tentacles cum![/b]")
 			var possible:Array = [
 			]
+			var theSub:BaseCharacter = getSub()
+			var hasEggs:bool = theSub.hasEggsIn(BodypartSlot.Vagina, true) || theSub.hasEggsIn(BodypartSlot.Anus, true) || theSub.hasEggsIn(BodypartSlot.Head, true)
 			if(getSub().hasReachableVagina()):
 				getDom().fillBalls(RNG.randf_range(0.9, 1.0))
 				cumInsideNoText(DOM_0, SUB_0, S_VAGINA)
 				possible.append_array([
-					"Slick tips swell inside {sub.your} mouth, pussy, and ass, then begin to pulse, pumping thick {dom.cum} deep into {sub.yourHis} holes all at once.",
-					"The tendrils twitch and pulse, then unload. A gush of sticky {dom.cum} hits the back of {sub.your} throat. Another floods {sub.yourHis} pussy, warm and thick. A third stuffs {sub.yourHis} ass, filling it up.",
-					"All at once, the tentacles erupt. Hot {dom.cum} pours down {sub.your} throat, pumps into {sub.yourHis} womb, and floods {sub.yourHis} {sub.analStretch} ass.",
+					"Slick tips swell inside {sub.your} mouth, pussy, and ass, then begin to pulse, pumping thick {dom.cum} deep into {sub.yourHis} holes all at once"+(", [b]fertilizing the eggs[/b]" if hasEggs else "")+".",
+					"The tendrils twitch and pulse, then unload. A gush of sticky {dom.cum} hits the back of {sub.your} throat. Another floods {sub.yourHis} pussy, warm and thick. A third stuffs {sub.yourHis} ass, filling it up."+(" [b]The nectar helps to fertilize the eggs[/b]." if hasEggs else "")+"",
+					"All at once, the tentacles erupt. Hot {dom.cum} pours down {sub.your} throat, pumps into {sub.yourHis} womb, and floods {sub.yourHis} {sub.analStretch} ass."+(" [b]The nectar helps to fertilize the eggs[/b]." if hasEggs else "")+"",
 				])
 			else:
 				possible.append_array([
-					"Slick tips swell inside {sub.your} mouth and ass, then begin to pulse, pumping thick {dom.cum} deep into {sub.yourHis} holes all at once.",
-					"The tendrils twitch and pulse, then unload. A gush of sticky {dom.cum} hits the back of {sub.your} throat while anothre floods {sub.yourHis} ass, filling it up.",
-					"All at once, the tentacles erupt. Hot {dom.cum} pours down {sub.your} throat gets pumped into {sub.yourHis} {sub.analStretch} ass, stuffing it full.",
+					"Slick tips swell inside {sub.your} mouth and ass, then begin to pulse, pumping thick {dom.cum} deep into {sub.yourHis} holes all at once"+(", [b]fertilizing the eggs[/b]" if hasEggs else "")+".",
+					"The tendrils twitch and pulse, then unload. A gush of sticky {dom.cum} hits the back of {sub.your} throat while anothre floods {sub.yourHis} ass, filling it up."+(" [b]The nectar helps to fertilize the eggs[/b]." if hasEggs else "")+"",
+					"All at once, the tentacles erupt. Hot {dom.cum} pours down {sub.your} throat gets pumped into {sub.yourHis} {sub.analStretch} ass, stuffing it full."+(" [b]The nectar helps to fertilize the eggs[/b]." if hasEggs else "")+"",
 				])
 			getDom().fillBalls(RNG.randf_range(0.9, 1.0))
 			cumInsideNoText(DOM_0, SUB_0, S_ANUS)
 			getDom().fillBalls(RNG.randf_range(0.9, 1.0))
 			cumInsideNoText(DOM_0, SUB_0, S_MOUTH)
+			getDom().fillBalls(RNG.randf_range(0.9, 1.0))
+			getSub().cummedOnBy(getDomID(), FluidSource.Penis)
 			
 			addTextPick(possible)
 		satisfyGoals()
@@ -293,7 +278,8 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 		return
 	if(_id == "rub"):
 		addText("{dom.You} {dom.youVerb('rub')} {dom.yourHis} tentacles against {sub.your} holes.")
-		stimulateSex(DOM_0, SUB_0, S_VAGINA, I_TEASE, SPEED_VERYSLOW)
+		if(getSub().hasReachableVagina()):
+			stimulateSex(DOM_0, SUB_0, S_VAGINA, I_TEASE, SPEED_VERYSLOW)
 		stimulateSex(DOM_0, SUB_0, S_ANUS, I_TEASE, SPEED_VERYSLOW)
 		stimulateSex(DOM_0, SUB_0, S_MOUTH, I_TEASE, SPEED_VERYSLOW)
 		return
