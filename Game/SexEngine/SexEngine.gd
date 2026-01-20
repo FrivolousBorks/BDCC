@@ -74,6 +74,8 @@ func addTextRaw(_text:String):
 func talkText(_charID:String, _text:String):
 	if(_text.empty()):
 		return
+	if(domsNoTalking && doms.has(_charID)):
+		return
 	addOutputRaw([OUTPUT_SAY, _charID, _text])
 
 func addOutputSeparator():

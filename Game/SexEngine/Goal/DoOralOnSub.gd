@@ -12,6 +12,10 @@ func isPossible(_sexEngine, _domInfo, _subInfo, _data):
 	if(!_subInfo.getChar().canZoneOrgasm(BodypartSlot.Penis) && !_subInfo.getChar().canZoneOrgasm(BodypartSlot.Vagina)):
 		return false
 	
+	# Tentacle activity only supports penis stroking
+	if(_sexEngine.getSexTypeID() == SexType.TentaclesSex && !_subInfo.getChar().hasReachablePenis()):
+		return false
+	
 	return true
 
 func getSubGoals(_sexEngine, _domInfo, _subInfo, _data):

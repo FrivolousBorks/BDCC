@@ -15,6 +15,8 @@ func isPossible(_sexEngine, _domInfo, _subInfo, _data):
 		return false
 	if(!_subInfo.getChar().canZoneOrgasm(BodypartSlot.Penis)):
 		return false
+	if(_sexEngine.getSexTypeID() == SexType.TentaclesSex):
+		return false
 	
 	return true
 

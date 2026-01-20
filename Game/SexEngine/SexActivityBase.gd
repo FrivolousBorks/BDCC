@@ -586,6 +586,8 @@ func talkText(_indx1:int, _text:String):
 	var theInfo := getDomOrSubInfo(_indx1)
 	if(theInfo.isUnconscious()):
 		return
+	if(_indx1 >= 0 && getSexEngine().domsNoTalking):
+		return
 	addOutputRaw([SexEngine.OUTPUT_SAY, theInfo.getCharID(), processText(_text)])
 
 func react(_reactionID:int, _chances:Array = [100.0, 100.0], _actors:Array = [DOM_0, SUB_0], _args:Array = []):
