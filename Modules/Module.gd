@@ -33,6 +33,7 @@ var slaveTypes = []
 var slaveActions = []
 var slaveEvents = []
 var slaveActivities = []
+var sexReactionHandlers = []
 
 var id = "badmodule"
 var author = "no author"
@@ -145,6 +146,9 @@ func register():
 		
 	for slaveActivity in slaveActivities:
 		GlobalRegistry.registerSlaveActivity(slaveActivity)
+
+	for sexReactionHandler in sexReactionHandlers:
+		GlobalRegistry.registerSexReactionHandler(sexReactionHandler)
 
 func registerEventTriggers():
 	pass
