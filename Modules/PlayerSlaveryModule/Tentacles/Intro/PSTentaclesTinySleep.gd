@@ -64,7 +64,7 @@ func _run():
 		addButton("Sleep", "See what happens next", "newday")
 	if(state == "newday"):
 		# (( small idle anim
-		playAnimation(StageScene.Solo, "stand")
+		playAnimation(StageScene.TentaclesDuo, "idle", {tentaclesSizeSmall=true, plant=true})
 		aimCameraAndSetLocName("pstent_left")
 		GM.pc.setLocation("pstent_left")
 		saynn("It's a new day..")

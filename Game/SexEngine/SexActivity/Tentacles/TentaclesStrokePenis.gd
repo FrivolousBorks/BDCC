@@ -1,5 +1,6 @@
 extends SexActivityBase
 var waitTimer:int = 0
+var altPose:bool = false
 
 func _init():
 	id = "TentaclesStrokePenis"
@@ -52,6 +53,8 @@ func isActivityImpossibleShouldStop() -> bool:
 	return false
 
 func startActivity(_args):
+	altPose = RNG.chance(50)
+	
 	var exposedThings:Array = []
 	var genitalsText:String = "crotch"
 	if(getSub().hasPenis() && getSub().getFirstItemThatCoversBodypart(BodypartSlot.Penis) == null):
@@ -128,7 +131,7 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 	if(_id == "startHandjob"):
 		setState("handjob")
 		addTextPick([
-			"{dom.You} {dom.youVerb('wrap')} {dom.yourHis} digits around {sub.yourHis} {sub.penisShort}!",
+			"A tentacles wraps around {sub.your} {sub.penisShort} and proceeds to stroke it!",
 		])
 		stimulate(DOM_0, S_MOUTH, SUB_0, S_PENIS, I_TEASE, Fetish.OralSexGiving, SPEED_SLOW)
 		react(SexReaction.AboutToHandjobSub)
@@ -166,7 +169,7 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 		if(exposedThings.size() > 0):
 			genitalsText = "exposed "+Util.humanReadableList(exposedThings)
 			
-		addText("{dom.You} {dom.youVerb('pull')} {dom.yourHis} lips away from {sub.yourHis} "+genitalsText+".")
+		addText("The tentacle pulls away from {sub.yourHis} "+genitalsText+".")
 
 	if(_id == "warndom"):
 		if(state == "handjob"):
@@ -234,6 +237,12 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 
 
 func getAnimation():
+	if(altPose):
+		if(state == "handjob" || state == "subabouttocumHandjob"):
+			if(isCloseToCumming(SUB_0)):
+				return [StageScene.TentaclesBondage, "strokefast", {pc=SUB_0, bodyState={hard=true}}]
+			return [StageScene.TentaclesBondage, "stroke", {pc=SUB_0, bodyState={hard=true}}]
+		return [StageScene.TentaclesBondage, "tease", {pc=SUB_0}]
 	if(state == "handjob" || state == "subabouttocumHandjob"):
 		if(isCloseToCumming(SUB_0)):
 			return [StageScene.TentaclesCuddle, "strokefast", {pc=SUB_0, bodyState={hard=true}}]
@@ -249,6 +258,7 @@ func saveData():
 	var data = .saveData()
 	
 	data["waitTimer"] = waitTimer
+	data["altPose"] = altPose
 
 	return data
 	
@@ -256,3 +266,4 @@ func loadData(data):
 	.loadData(data)
 	
 	waitTimer = SAVE.loadVar(data, "waitTimer", 0)
+	altPose = SAVE.loadVar(data, "altPose", false)

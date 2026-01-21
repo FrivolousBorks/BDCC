@@ -67,6 +67,7 @@ func _run():
 		addButton("Get up", "See what happened while you were sleeping", "doGetup")
 	if(state == "doGetup"):
 		# (( sad tiny tentacles anim
+		playAnimation(StageScene.TentaclesDuo, "sleep", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true, instantSleep=true})
 		aimCameraAndSetLocName("pstent_middle")
 		addCharacter(_tentacles.getTentaclesCharID())
 		saynn("You get up and take a look at the tentacles..")
@@ -127,6 +128,8 @@ func _run():
 		addButton("Broccoli", "Feed it some broccoli", "1_broc")
 	if(state == "1_chicken"):
 		# (( tiny anim
+		playAnimation(StageScene.TentaclesDuo, "eat", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true, instantSleep=true})
+		
 		aimCameraAndSetLocName("pstent_middle")
 		saynn("You see some chicken.. and decide to feed it to the tentacles.")
 
@@ -149,6 +152,8 @@ func _run():
 		addButton("Continue", "See what happens next", "needMusic")
 	if(state == "1_meat"):
 		# (( tiny anim
+		playAnimation(StageScene.TentaclesDuo, "eat", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true, instantSleep=true})
+		
 		aimCameraAndSetLocName("pstent_middle")
 		saynn("For whatever reason, there is a stake there.. a completely raw, uncooked stake.")
 
@@ -175,6 +180,8 @@ func _run():
 		addButton("Continue", "See what happens next", "needMusic")
 	if(state == "1_milk"):
 		# (( tiny anim
+		playAnimation(StageScene.TentaclesDuo, "dance", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true, instantSleep=true})
+		
 		aimCameraAndSetLocName("pstent_middle")
 		saynn("You grab the strange milk bottle. You open it and bring your nose to it..")
 
@@ -203,6 +210,8 @@ func _run():
 		addButton("Continue", "See what happens next", "needMusic")
 	if(state == "1_broc"):
 		# (( tiny anim
+		playAnimation(StageScene.TentaclesDuo, "eat", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true, instantSleep=true})
+		
 		aimCameraAndSetLocName("pstent_middle")
 		saynn("You see broccoli.. and now, for some reason, you can't get rid of a certain thought anymore. You grab it and close the fridge.")
 
@@ -229,6 +238,8 @@ func _run():
 		addButton("Continue", "See what happens next", "needMusic")
 	if(state == "needMusic"):
 		# (( tiny idle anim
+		playAnimation(StageScene.TentaclesDuo, "idle", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		aimCameraAndSetLocName("pstent_middle")
 		saynn("[say=sci2]We wanna test how the specimen will react to a different atmosphere.[/say]")
 
@@ -259,6 +270,8 @@ func _run():
 		addButton("Smooth jazz", "Play something smooth and intimate", "2_jazz")
 	if(state == "2_metal"):
 		# ((tiny dance anim?
+		playAnimation(StageScene.TentaclesDuo, "danceFast", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		saynn("You choose one of the heavy metal music tracks.. and suddenly the whole cell lights up red.. almost like it's an emergency.")
 
 		saynn("The first thunderous guitar chord hits like a physical blow, a wave of pure noise that vibrates the air in your chest.")
@@ -288,6 +301,8 @@ func _run():
 		addButton("Continue", "See what happens next", "timeToTest")
 	if(state == "2_ambient"):
 		# ((tiny slow dance anim?
+		playAnimation(StageScene.TentaclesDuo, "dance", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		saynn("You find some smooth, soothing ambient music.. and decide to turn it on.")
 
 		saynn("The first soft, calming note drifts through the air of the cell. The harsh lab lights seem to be switching towards a warm hue.")
@@ -307,6 +322,8 @@ func _run():
 		addButton("Continue", "See what happens next", "timeToTest")
 	if(state == "2_dnb"):
 		# ((tiny dance anim?
+		playAnimation(StageScene.TentaclesDuo, "danceFast", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		saynn("You see a drum'n'bass option.. and decide to pick it! The cell's lighting gets all dim..")
 
 		saynn("The first sound that fills the room is a precise thump-thump-thump of a deep drum. It's followed instantly by a fast, intricate pattern of sharp, electronic hi-hats, each one spawning a little flash of light. The sound is rapid, clean, and full of energy.")
@@ -326,6 +343,8 @@ func _run():
 		addButton("Continue", "See what happens next", "timeToTest")
 	if(state == "2_jazz"):
 		# ((tiny slow dance anim?
+		playAnimation(StageScene.TentaclesDuo, "dance", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		saynn("You pick an option that you like the most..")
 
 		saynn("[say=sci2]Deploying smooth jazz.[/say]")
@@ -343,6 +362,8 @@ func _run():
 		addButton("Continue", "See what happens next", "timeToTest")
 	if(state == "timeToTest"):
 		# (( tiny idle anim
+		playAnimation(StageScene.TentaclesDuo, "idle", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		saynn("[say=sci2]We don't have much time before our break so let's be quick.[/say]")
 
 		saynn("The doors to your cell open.. revealing a few armed guards who bring in some things.")
@@ -356,6 +377,8 @@ func _run():
 		addButton("Small ladder", "Let the tentacles climb a small ladder", "3_ladder")
 		addButton("Onahole", "Give it a sextoy and see what it will do with it", "3_onahole")
 	if(state == "3_puzzle"):
+		playAnimation(StageScene.TentaclesDuo, "poke", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		saynn("One of the things that were brought by guards seems to be a logic puzzle.. It looks like a box with differently-shaped holes in it.. square, circle, triangle and some others. And there are also objects of the same shapes that you are supposed to push through these holes.")
 
 		saynn("[say=pc]Alright.. Should be simple enough. Try to figure out what to do.[/say]")
@@ -398,6 +421,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "afterAll")
 	if(state == "3_toy"):
+		playAnimation(StageScene.TentaclesDuo, "whip2", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		saynn("One of the things that were brought is a little humanoid robot.. It looks like it has cool red armor with a slick but also slightly intimidating design. The helmet has 4 robotic eyes.. and its hand is holding a weapon.")
 
 		saynn("[say=pc]Isn't that a toy?[/say]")
@@ -503,6 +528,8 @@ func _run():
 		addButton("Continue", "See what happens next", "afterAll")
 	if(state == "afterAll"):
 		# (( Tiny idle anim
+		playAnimation(StageScene.TentaclesDuo, "idle", {tentaclesLess=true, tentaclesSizeTiny=true, plant=true})
+		
 		saynn("The testing seems to be.. over.. at least for now.")
 
 		saynn("[say=sci2]You may get some rest now, test subject. We need time to go through all the data.[/say]")

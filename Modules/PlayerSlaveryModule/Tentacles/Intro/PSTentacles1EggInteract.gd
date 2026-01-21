@@ -62,6 +62,7 @@ func _run():
 		addButton("Egg", "Go approach the egg", "goApproach")
 	if(state == "goApproach"):
 		# (( Anim with egg
+		playAnimation(StageScene.SoloBigEgg, "stand")
 		aimCameraAndSetLocName("pstent_middle")
 		GM.pc.setLocation("pstent_middle")
 		saynn("Slowly, you get off the bed and start stepping towards the mysterious egg.. Who knows what is inside it.. so you move your legs as quietly as the cold concrete floor allows..")
@@ -157,6 +158,7 @@ func _run():
 		addButton("Continue", "See what happens next", "needWarm")
 	if(state == "1_listen"):
 		# (( Listen to egg anim?
+		playAnimation(StageScene.SoloBigEgg, "kneel")
 		saynn("You gather all your strength.. and bring your ear close to the egg's surface.. listening to it.")
 
 		saynn("You hear.. a very subtle hum.. an extremely quiet murmur. It feels quite peaceful..")
@@ -182,6 +184,7 @@ func _run():
 		addButton("Continue", "See what happens next", "needWarm")
 	if(state == "1_kick"):
 		# ((Egg kick anim?
+		playAnimation(StageScene.SoloBigEgg, "kick")
 		saynn("If you destroy the egg, the thing that's inside won't get a chance to hatch and kill you!")
 
 		saynn("So.. feeling brave and angry.. you kick the egg!")
@@ -203,6 +206,7 @@ func _run():
 		addButton("Continue", "See what happens next", "needWarm")
 	if(state == "1_rub"):
 		# (( Rub egg anim?
+		playAnimation(StageScene.SoloBigEgg, "kneel")
 		saynn("You suddenly feel.. kind..")
 
 		saynn("And so you get closer to the egg and put your hand on it. The surface is very cold.. the poor thing must be shivering in there.")
@@ -228,6 +232,8 @@ func _run():
 		addButton("Continue", "See what happens next", "needWarm")
 	if(state == "needWarm"):
 		# (( egg anim?
+		playAnimation(StageScene.SoloBigEgg, "stand")
+		
 		saynn("[say=sci2]Alright. We have received some data. According to our calculations, the specimen requires a higher internal temperature.[/say]")
 
 		saynn("[say=pc]For what?[/say]")
@@ -276,6 +282,7 @@ func _run():
 
 		addButton("Sleep", "Go sleep!", "2fridgeSleep")
 	if(state == "2fridgeSleep"):
+		playAnimation(StageScene.SoloBigEgg, "stand")
 		saynn("You wake up and open the fridge..")
 
 		saynn("The egg seems alive.. very alive actually. In fact, it has visibly grown. Shit.")
@@ -397,6 +404,8 @@ func _run():
 		addButton("Continue", "See what happens next", "gottaProvoke")
 	if(state == "2_cuddle"):
 		# (( cuddle with egg anim??
+		playAnimation(StageScene.SoloBigEgg, "kneel")
+		
 		aimCameraAndSetLocName("pstent_bed")
 		saynn("The egg is feeling so cold.. there is obviously only one solution to this!")
 
@@ -430,6 +439,7 @@ func _run():
 	if(state == "2cuddleSleep"):
 		aimCameraAndSetLocName("pstest_middle")
 		# (( egg anim
+		playAnimation(StageScene.SoloBigEgg, "stand")
 		saynn("You enjoy the egg's company for a while.. until the intercom makes you snap out of your dreams.")
 
 		saynn("[say=sci1]Alright, we're back. You can put the egg down already.[/say]")
@@ -459,6 +469,7 @@ func _run():
 		addButton("Continue", "See what happens next", "gottaProvoke")
 	if(state == "gottaProvoke"):
 		# (( egg anim
+		playAnimation(StageScene.SoloBigEgg, "stand")
 		aimCameraAndSetLocName("pstent_middle")
 		GM.pc.setLocation("pstent_middle")
 		saynn("[say=sci2]The egg is hatching.. but you might want to.. accelerate the process a bit.[/say]")
@@ -507,6 +518,7 @@ func _run():
 		addButton("Continue", "See what happens next", "revealTentacles")
 	if(state == "revealTentacles"):
 		# (( Anim with tiny tentacles
+		playAnimation(StageScene.TentaclesDuo, "idle", {tentaclesSizeTiny=true, plant=true, instantSleep=true})
 		addCharacter(_tentacles.getTentaclesCharID())
 		saynn("Three small, green tentacles slowly uncurl. They are slick and slimy, glistening in the light.")
 

@@ -46,6 +46,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "0"):
+		_tentacles.doAnimDuo("whip")
 		saynn("You were minding your own business.. when you suddenly feel one of the tentacles bonking you! Ow.")
 
 		saynn("You turn around and look at it.")
@@ -55,6 +56,7 @@ func _run():
 		_tentacles.talk("We're sorry that we did that.")
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "1"):
+		_tentacles.doAnimDuo("glare")
 		saynn("Your path gets blocked by the tentacles! They don't really have any eyes.. but you can still feel their angry glare. The air itself feels heavy..")
 
 		saynn("They are probably upset because you "+str(_tentacles.getAngryReason())+".")
@@ -63,6 +65,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "2"):
+		_tentacles.doAnimDuo("whip2")
 		saynn("The tentacles approach you, twitching slightly as their tips watch you intently.")
 
 		saynn("[say=pc]What now?[/say]")
@@ -77,6 +80,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "3"):
+		_tentacles.doAnimDuo("poke")
 		saynn("You almost trip as a tentacle loops itself securely around your ankle, anchoring you to the spot.")
 
 		saynn("You look down.. and see more of them approaching and sliding up along your legs and curling around your wrists, binding them. They then tighten their grip.. not enough to hurt, but enough to make their point. They're probably upset because you "+str(_tentacles.getAngryReason())+".")
@@ -88,6 +92,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "4"):
+		_tentacles.doAnimDuo("whip", {npcAction="hurt"})
 		saynn("Your path gets blocked by the tentacles! They seem upset because you "+str(_tentacles.getAngryReason())+".")
 
 		saynn("[say=pc]So? What are you gonna do?[/say]")
@@ -100,6 +105,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "5"):
+		playAnimation(StageScene.TentaclesBondage, "bondage", {plant=true})
+		
 		saynn("You hear a quiet hiss behind you. As you look behind, you see that it's the slick tentacles sliding across the floor.")
 
 		saynn("Before you can react, a thick, ropy tendril coils around your waist and arms, giving you a sudden tight embrace.")
@@ -122,6 +129,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "6"):
+		playAnimation(StageScene.TentaclesChoke, "tease", {plant=true})
+		
 		saynn("The tentacle monster approaches you.. Before you can react, one of the tendrils darts towards your neck and coils around it!")
 
 		saynn("[say=pc]Hey![/say]")
@@ -136,6 +145,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "7"):
+		playAnimation(StageScene.TentaclesSex, "tease", {plant=true})
+		
 		saynn("You feel something touching your ankles.. and also your wrists. You look down and see tentacles curling around your limbs!")
 
 		saynn("[say=pc]Hey, wait![/say]")

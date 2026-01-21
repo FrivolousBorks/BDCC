@@ -83,6 +83,8 @@ func playAnimation(animID, _args = {}):
 
 	#_args["instantSleep"] = true
 	if(_args.has("instantSleep") && _args["instantSleep"]):
+		yield(get_tree(), "idle_frame")
+		yield(get_tree(), "idle_frame")
 		state_machine2.start("TentSleep-loop")
 		yield(get_tree(), "idle_frame")
 		yield(get_tree(), "idle_frame")

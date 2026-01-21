@@ -530,16 +530,36 @@ func getBiggestStat() -> int:
 		biggestStat = STAT_LUST
 	return biggestStat
 
+func processTalkText(_text:String) -> String:
+	if(mind < 5):
+		return ""
+	_text = Util.shuffleWordLetters(_text, 50.0)
+	_text = Util.replaceLettersRandomly(_text, 20.0)
+	return _text
 
 func talk(_text:String):
 	if(mind < 5):
 		return
 	var _scene:SceneBase = GM.main.getCurrentScene()
 	#TODO: Hide/scamble depending on mind value
-	_text = Util.shuffleWordLetters(_text, 50.0)
-	_text = Util.replaceLettersRandomly(_text, 20.0)
 	
+	var _theText:String = processTalkText(_text)
+	if(_theText.empty()):
+		return
 	_scene.saynn("[say="+getTentaclesCharID()+"]"+_text+"[/say]")
+
+func doAnimDuo(_anim:String, _otherArgs:Dictionary = {}):
+	var theArgs:Dictionary = {plant=true}
+	if(growStage in [STAGE_TINY, STAGE_TINY_AFTERTEST]):
+		theArgs["tentaclesLess"] = true
+		theArgs["tentaclesSizeTiny"] = true
+	if(growStage in [STAGE_SMALL, STAGE_SMALL_ENDDAY]):
+		theArgs["tentaclesSizeSmall"] = true
+	
+	for argID in _otherArgs:
+		theArgs[argID] = _otherArgs[argID]
+	
+	GM.main.getCurrentScene().playAnimation(StageScene.TentaclesDuo, _anim, theArgs)
 
 func saveData() -> Dictionary:
 	return {}

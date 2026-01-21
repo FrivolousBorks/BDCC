@@ -94,12 +94,6 @@ xfade_time = 0.5
 [sub_resource type="AnimationNodeStateMachineTransition" id=118]
 xfade_time = 0.5
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=119]
-xfade_time = 0.5
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=120]
-xfade_time = 0.5
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=121]
 xfade_time = 0.5
 
@@ -122,6 +116,12 @@ switch_mode = 2
 auto_advance = true
 xfade_time = 0.2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=170]
+xfade_time = 0.5
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=171]
+xfade_time = 0.5
+
 [sub_resource type="AnimationNodeStateMachine" id=123]
 states/TentBondageFromSexTease_1/node = SubResource( 158 )
 states/TentBondageFromSexTease_1/position = Vector2( 597, 281 )
@@ -132,7 +132,7 @@ states/TentBondageSexFast_1-loop/position = Vector2( 369, 596 )
 states/TentBondageSexInside_1-loop/node = SubResource( 94 )
 states/TentBondageSexInside_1-loop/position = Vector2( 141, 420 )
 states/TentBondageSexTease_1-loop/node = SubResource( 95 )
-states/TentBondageSexTease_1-loop/position = Vector2( 545, 377 )
+states/TentBondageSexTease_1-loop/position = Vector2( 813, 357 )
 states/TentBondageSex_1-loop/node = SubResource( 96 )
 states/TentBondageSex_1-loop/position = Vector2( 619, 453 )
 states/TentBondageStart_1-loop/node = SubResource( 97 )
@@ -145,12 +145,12 @@ states/TentBondageToSexTease_1/node = SubResource( 159 )
 states/TentBondageToSexTease_1/position = Vector2( 253, 326 )
 states/TentBondage_1-loop/node = SubResource( 100 )
 states/TentBondage_1-loop/position = Vector2( 288, 183 )
-transitions = [ "TentBondageStart_1-loop", "TentBondage_1-loop", SubResource( 101 ), "TentBondage_1-loop", "TentBondageStart_1-loop", SubResource( 102 ), "TentBondage_1-loop", "TentBondageKneel_1-loop", SubResource( 103 ), "TentBondageKneel_1-loop", "TentBondage_1-loop", SubResource( 104 ), "TentBondageSexTease_1-loop", "TentBondageSexInside_1-loop", SubResource( 107 ), "TentBondageSexInside_1-loop", "TentBondageSexTease_1-loop", SubResource( 108 ), "TentBondageSexInside_1-loop", "TentBondageSex_1-loop", SubResource( 109 ), "TentBondageSex_1-loop", "TentBondageSexInside_1-loop", SubResource( 110 ), "TentBondageSex_1-loop", "TentBondageSexTease_1-loop", SubResource( 111 ), "TentBondageSexTease_1-loop", "TentBondageSex_1-loop", SubResource( 112 ), "TentBondageSexFast_1-loop", "TentBondageSexTease_1-loop", SubResource( 113 ), "TentBondageSexTease_1-loop", "TentBondageSexFast_1-loop", SubResource( 114 ), "TentBondageSexFast_1-loop", "TentBondageSexInside_1-loop", SubResource( 115 ), "TentBondageSexInside_1-loop", "TentBondageSexFast_1-loop", SubResource( 116 ), "TentBondageSex_1-loop", "TentBondageSexFast_1-loop", SubResource( 117 ), "TentBondageSexFast_1-loop", "TentBondageSex_1-loop", SubResource( 118 ), "TentBondage_1-loop", "TentBondageStroke_1-loop", SubResource( 119 ), "TentBondageStroke_1-loop", "TentBondage_1-loop", SubResource( 120 ), "TentBondageStroke_1-loop", "TentBondageStrokeFast_1-loop", SubResource( 121 ), "TentBondageStrokeFast_1-loop", "TentBondageStroke_1-loop", SubResource( 122 ), "TentBondage_1-loop", "TentBondageToSexTease_1", SubResource( 160 ), "TentBondageToSexTease_1", "TentBondageSexTease_1-loop", SubResource( 161 ), "TentBondageSexTease_1-loop", "TentBondageFromSexTease_1", SubResource( 162 ), "TentBondageFromSexTease_1", "TentBondage_1-loop", SubResource( 163 ) ]
+transitions = [ "TentBondageStart_1-loop", "TentBondage_1-loop", SubResource( 101 ), "TentBondage_1-loop", "TentBondageStart_1-loop", SubResource( 102 ), "TentBondage_1-loop", "TentBondageKneel_1-loop", SubResource( 103 ), "TentBondageKneel_1-loop", "TentBondage_1-loop", SubResource( 104 ), "TentBondageSexTease_1-loop", "TentBondageSexInside_1-loop", SubResource( 107 ), "TentBondageSexInside_1-loop", "TentBondageSexTease_1-loop", SubResource( 108 ), "TentBondageSexInside_1-loop", "TentBondageSex_1-loop", SubResource( 109 ), "TentBondageSex_1-loop", "TentBondageSexInside_1-loop", SubResource( 110 ), "TentBondageSex_1-loop", "TentBondageSexTease_1-loop", SubResource( 111 ), "TentBondageSexTease_1-loop", "TentBondageSex_1-loop", SubResource( 112 ), "TentBondageSexFast_1-loop", "TentBondageSexTease_1-loop", SubResource( 113 ), "TentBondageSexTease_1-loop", "TentBondageSexFast_1-loop", SubResource( 114 ), "TentBondageSexFast_1-loop", "TentBondageSexInside_1-loop", SubResource( 115 ), "TentBondageSexInside_1-loop", "TentBondageSexFast_1-loop", SubResource( 116 ), "TentBondageSex_1-loop", "TentBondageSexFast_1-loop", SubResource( 117 ), "TentBondageSexFast_1-loop", "TentBondageSex_1-loop", SubResource( 118 ), "TentBondageStroke_1-loop", "TentBondageStrokeFast_1-loop", SubResource( 121 ), "TentBondageStrokeFast_1-loop", "TentBondageStroke_1-loop", SubResource( 122 ), "TentBondage_1-loop", "TentBondageToSexTease_1", SubResource( 160 ), "TentBondageToSexTease_1", "TentBondageSexTease_1-loop", SubResource( 161 ), "TentBondageSexTease_1-loop", "TentBondageFromSexTease_1", SubResource( 162 ), "TentBondageFromSexTease_1", "TentBondage_1-loop", SubResource( 163 ), "TentBondageSexTease_1-loop", "TentBondageStroke_1-loop", SubResource( 170 ), "TentBondageStroke_1-loop", "TentBondageSexTease_1-loop", SubResource( 171 ) ]
 start_node = "TentBondageStart_1-loop"
-graph_offset = Vector2( -105, 2 )
+graph_offset = Vector2( 162, 45 )
 
 [sub_resource type="AnimationNodeBlendTree" id=124]
-graph_offset = Vector2( -13, 42 )
+graph_offset = Vector2( -20, 47 )
 nodes/Animation/node = SubResource( 3 )
 nodes/Animation/position = Vector2( 140, 280 )
 nodes/CuffsBlend/node = SubResource( 4 )
@@ -243,12 +243,6 @@ xfade_time = 0.5
 [sub_resource type="AnimationNodeStateMachineTransition" id=151]
 xfade_time = 0.5
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=152]
-xfade_time = 0.5
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=153]
-xfade_time = 0.5
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=154]
 xfade_time = 0.5
 
@@ -271,9 +265,15 @@ switch_mode = 2
 auto_advance = true
 xfade_time = 0.2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=172]
+xfade_time = 0.5
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=173]
+xfade_time = 0.5
+
 [sub_resource type="AnimationNodeStateMachine" id=156]
 states/TentBondageFromSexTease_2/node = SubResource( 164 )
-states/TentBondageFromSexTease_2/position = Vector2( 542, 290 )
+states/TentBondageFromSexTease_2/position = Vector2( 513, 279 )
 states/TentBondageKneel_2-loop/node = SubResource( 125 )
 states/TentBondageKneel_2-loop/position = Vector2( 107, 194 )
 states/TentBondageSexFast_2-loop/node = SubResource( 126 )
@@ -281,7 +281,7 @@ states/TentBondageSexFast_2-loop/position = Vector2( 405, 538 )
 states/TentBondageSexInside_2-loop/node = SubResource( 127 )
 states/TentBondageSexInside_2-loop/position = Vector2( 199, 448 )
 states/TentBondageSexTease_2-loop/node = SubResource( 128 )
-states/TentBondageSexTease_2-loop/position = Vector2( 445, 373 )
+states/TentBondageSexTease_2-loop/position = Vector2( 760, 357 )
 states/TentBondageSex_2-loop/node = SubResource( 129 )
 states/TentBondageSex_2-loop/position = Vector2( 591, 448 )
 states/TentBondageStart_2-loop/node = SubResource( 130 )
@@ -294,9 +294,9 @@ states/TentBondageToSexTease_2/node = SubResource( 165 )
 states/TentBondageToSexTease_2/position = Vector2( 237, 290 )
 states/TentBondage_2-loop/node = SubResource( 133 )
 states/TentBondage_2-loop/position = Vector2( 419, 188 )
-transitions = [ "TentBondageStart_2-loop", "TentBondage_2-loop", SubResource( 134 ), "TentBondage_2-loop", "TentBondageStart_2-loop", SubResource( 135 ), "TentBondage_2-loop", "TentBondageKneel_2-loop", SubResource( 136 ), "TentBondageKneel_2-loop", "TentBondage_2-loop", SubResource( 137 ), "TentBondageSexInside_2-loop", "TentBondageSexTease_2-loop", SubResource( 140 ), "TentBondageSexTease_2-loop", "TentBondageSexInside_2-loop", SubResource( 141 ), "TentBondageSex_2-loop", "TentBondageSexTease_2-loop", SubResource( 142 ), "TentBondageSexTease_2-loop", "TentBondageSex_2-loop", SubResource( 143 ), "TentBondageSexTease_2-loop", "TentBondageSexFast_2-loop", SubResource( 144 ), "TentBondageSexFast_2-loop", "TentBondageSexTease_2-loop", SubResource( 145 ), "TentBondageSexInside_2-loop", "TentBondageSex_2-loop", SubResource( 146 ), "TentBondageSex_2-loop", "TentBondageSexInside_2-loop", SubResource( 147 ), "TentBondageSexInside_2-loop", "TentBondageSexFast_2-loop", SubResource( 148 ), "TentBondageSexFast_2-loop", "TentBondageSexInside_2-loop", SubResource( 149 ), "TentBondageSexFast_2-loop", "TentBondageSex_2-loop", SubResource( 150 ), "TentBondageSex_2-loop", "TentBondageSexFast_2-loop", SubResource( 151 ), "TentBondage_2-loop", "TentBondageStroke_2-loop", SubResource( 152 ), "TentBondageStroke_2-loop", "TentBondage_2-loop", SubResource( 153 ), "TentBondageStroke_2-loop", "TentBondageStrokeFast_2-loop", SubResource( 154 ), "TentBondageStrokeFast_2-loop", "TentBondageStroke_2-loop", SubResource( 155 ), "TentBondage_2-loop", "TentBondageToSexTease_2", SubResource( 166 ), "TentBondageToSexTease_2", "TentBondageSexTease_2-loop", SubResource( 167 ), "TentBondageSexTease_2-loop", "TentBondageFromSexTease_2", SubResource( 168 ), "TentBondageFromSexTease_2", "TentBondage_2-loop", SubResource( 169 ) ]
+transitions = [ "TentBondageStart_2-loop", "TentBondage_2-loop", SubResource( 134 ), "TentBondage_2-loop", "TentBondageStart_2-loop", SubResource( 135 ), "TentBondage_2-loop", "TentBondageKneel_2-loop", SubResource( 136 ), "TentBondageKneel_2-loop", "TentBondage_2-loop", SubResource( 137 ), "TentBondageSexInside_2-loop", "TentBondageSexTease_2-loop", SubResource( 140 ), "TentBondageSexTease_2-loop", "TentBondageSexInside_2-loop", SubResource( 141 ), "TentBondageSex_2-loop", "TentBondageSexTease_2-loop", SubResource( 142 ), "TentBondageSexTease_2-loop", "TentBondageSex_2-loop", SubResource( 143 ), "TentBondageSexTease_2-loop", "TentBondageSexFast_2-loop", SubResource( 144 ), "TentBondageSexFast_2-loop", "TentBondageSexTease_2-loop", SubResource( 145 ), "TentBondageSexInside_2-loop", "TentBondageSex_2-loop", SubResource( 146 ), "TentBondageSex_2-loop", "TentBondageSexInside_2-loop", SubResource( 147 ), "TentBondageSexInside_2-loop", "TentBondageSexFast_2-loop", SubResource( 148 ), "TentBondageSexFast_2-loop", "TentBondageSexInside_2-loop", SubResource( 149 ), "TentBondageSexFast_2-loop", "TentBondageSex_2-loop", SubResource( 150 ), "TentBondageSex_2-loop", "TentBondageSexFast_2-loop", SubResource( 151 ), "TentBondageStroke_2-loop", "TentBondageStrokeFast_2-loop", SubResource( 154 ), "TentBondageStrokeFast_2-loop", "TentBondageStroke_2-loop", SubResource( 155 ), "TentBondage_2-loop", "TentBondageToSexTease_2", SubResource( 166 ), "TentBondageToSexTease_2", "TentBondageSexTease_2-loop", SubResource( 167 ), "TentBondageSexTease_2-loop", "TentBondageFromSexTease_2", SubResource( 168 ), "TentBondageFromSexTease_2", "TentBondage_2-loop", SubResource( 169 ), "TentBondageStroke_2-loop", "TentBondageSexTease_2-loop", SubResource( 172 ), "TentBondageSexTease_2-loop", "TentBondageStroke_2-loop", SubResource( 173 ) ]
 start_node = "TentBondageStart_2-loop"
-graph_offset = Vector2( -109, -41 )
+graph_offset = Vector2( 174, 62 )
 
 [sub_resource type="AnimationNodeBlendTree" id=157]
 graph_offset = Vector2( -43, 46 )
