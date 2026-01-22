@@ -28,6 +28,8 @@ func _run():
 	var _tentacles:PlayerSlaveryTentacles = GM.main.PS
 
 	if(state == ""):
+		_tentacles.doAnimDuo("idle")
+		
 		if (_tentacles.lust <= 0):
 			saynn("The tentacles approach you.. they seem.. interested in you?")
 
@@ -80,6 +82,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "0"):
+		_tentacles.doAnimDuo("idle")
+		
 		saynn("You reach out and catch one of the slender tentacles.. It reflexively pulls back when it feels your hand.. but you calm it down with gentle touches.")
 
 		saynn("[say=pc]Easy now.[/say]")
@@ -90,6 +94,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "1"):
+		_tentacles.doAnimDuo("idle")
+		
 		saynn("You catch one of the tentacles with your hands. It gives a startled little twitch, trying to slip free.")
 
 		saynn("[say=pc]Easy. I'm not gonna hurt you.[/say]")
@@ -108,6 +114,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "2"):
+		_tentacles.doAnimDuo("idle")
+		
 		saynn("Your gaze settles on one of the more curious tentacles, its tip swaying gently near your shoulder.")
 
 		saynn("You feel like you wanna do something with it.. And so you lean in and press your lips to its smooth, cool surface. You smooch it!")
@@ -120,6 +128,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "3"):
+		playAnimation(StageScene.TentaclesBondage, "start", {plant=true})
+		
 		saynn("You're curious what the tentacles will do to you now.. so you present yourself for them.. completely naked. This is certainly unusual.. but you don't feel any fear.")
 
 		saynn("The tentacles just watch you from a far at first.. but eventually one of them reaches out to brush against your side with a light touch. You don't pull away.. allowing it to do so. Soon, another joins in. Together, they begin a slow, curious exploration.")
@@ -145,6 +155,8 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "4"):
+		playAnimation(StageScene.TentaclesBondage, "bondage", {plant=true})
+		
 		saynn("You're feeling a bit kinky and the monster can feel it.")
 
 		saynn("A tentacle, one that's thin and more agile than the rest, reaches up beside you and finds your wrists. Before you can answer, it loops itself gently but firmly around one wrist.. and then the other, pulling them together behind your back.")
@@ -172,6 +184,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "5"):
+		playAnimation(StageScene.TentaclesChoke, "tease", {plant=true})
 		saynn("The tentacles surround you, their movement smooth and deliberate, gliding over your skin, sending little sparks of warmth all throughout you..")
 
 		saynn("[say=pc]Feeling bold? Alright.. let's play.[/say]")

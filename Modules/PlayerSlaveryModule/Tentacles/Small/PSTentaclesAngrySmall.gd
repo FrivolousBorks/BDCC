@@ -106,7 +106,6 @@ func _run():
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "5"):
 		playAnimation(StageScene.TentaclesBondage, "bondage", {plant=true})
-		
 		saynn("You hear a quiet hiss behind you. As you look behind, you see that it's the slick tentacles sliding across the floor.")
 
 		saynn("Before you can react, a thick, ropy tendril coils around your waist and arms, giving you a sudden tight embrace.")
@@ -130,7 +129,6 @@ func _run():
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "6"):
 		playAnimation(StageScene.TentaclesChoke, "tease", {plant=true})
-		
 		saynn("The tentacle monster approaches you.. Before you can react, one of the tendrils darts towards your neck and coils around it!")
 
 		saynn("[say=pc]Hey![/say]")
@@ -146,7 +144,6 @@ func _run():
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "7"):
 		playAnimation(StageScene.TentaclesSex, "tease", {plant=true})
-		
 		saynn("You feel something touching your ankles.. and also your wrists. You look down and see tentacles curling around your limbs!")
 
 		saynn("[say=pc]Hey, wait![/say]")

@@ -52,7 +52,6 @@ func _run():
 		addButton("Refuse", "Refuse to feed them", "0_refuse")
 	if(state == "0_chicken"):
 		_tentacles.doAnimDuo("eat")
-		
 		saynn("You're still not sure if feeding any kind of meat to a plant is a good idea..")
 
 		saynn("But this ain't your usual kind of plant.")
@@ -66,7 +65,6 @@ func _run():
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "0_snack"):
 		_tentacles.doAnimDuo("eat")
-		
 		saynn("You're not sure what to give to the tentacles.. so you just grab a bag of chips and offer it to them.")
 
 		saynn("[say=pc]Want these?[/say]")
@@ -96,7 +94,6 @@ func _run():
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "0_broccoli"):
 		_tentacles.doAnimDuo("eat")
-		
 		saynn("You try to think about what plants usually eat..")
 
 		saynn("They don't really eat anything, do they? They just absorb the light and drink the water that's in their soil.")
@@ -112,7 +109,6 @@ func _run():
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "0_refuse"):
 		_tentacles.doAnimDuo("glare")
-		
 		saynn("You refuse to feed the tentacles and just watch them struggle to open the fridge.")
 
 		saynn("They slide their tentacles all across the cold surface of its door. A few of them stumble upon the handle.. but fail to tug on it with enough force.")
