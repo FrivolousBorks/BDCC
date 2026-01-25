@@ -175,7 +175,7 @@ func addTransitions(floorIDs:Array = []):
 	if(floorIDs.empty()):
 		floorIDs = cells.keys()
 	
-	for floorid in cells:
+	for floorid in floorIDs:
 		var floorcells = cells[floorid]
 		for pos in floorcells:
 			var _room = floorcells[pos]
@@ -248,7 +248,6 @@ func _ready():
 				
 				registerRoom(f.id, cell)
 	
-	addTransitions()
 	#print(roomDict)
 	#aimCamera("ScriptedRoom")#"cellblock_orange_playercell")
 

@@ -251,7 +251,6 @@ func _ready():
 	Console.addCommand("clearmoduleflag", self, "consoleClearModuleFlag", ["moduleID", "flagID"], "Resets the game flag, be very careful")
 	Console.addCommand("become", self, "consoleBecome", ["charID"], "Become another character")
 	#Console.addCommand("ae", self, "consoleAnimationEditor", [], "Animation editor")
-	applyAllWorldEdits()
 	
 func startNewGame():
 	GlobalRegistry.currentSave = 1
@@ -422,6 +421,7 @@ func loadingSavefileFinished():
 	reRun()
 	
 	applyAllWorldEdits()
+	GM.world.addTransitions()
 	
 	if(!rollbacker.rollbacking):
 		WHS.clearHistory()
