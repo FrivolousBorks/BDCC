@@ -29,7 +29,6 @@ func _run():
 
 	if(state == ""):
 		_tentacles.doAnimDuo("idle")
-		
 		if (_tentacles.lust <= 0):
 			saynn("The tentacles approach you.. they seem.. interested in you?")
 
@@ -76,14 +75,14 @@ func _run():
 				addButton("Deep kiss", "Kiss one of the tentacles and let it stretch your throat a bit..", "7")
 		addButton("Shoo!", "Tell the tentacles to stop", "say_shoo")
 	if(state == "say_shoo"):
+		playAnimation(StageScene.Solo, "stand")
 		saynn("You shoo the tentacle away from you.")
 
 		saynn("You're not feeling frisky.")
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "0"):
-		_tentacles.doAnimDuo("idle")
-		
+		playAnimation(StageScene.TentaclesStroke, "tease", {plant=true})
 		saynn("You reach out and catch one of the slender tentacles.. It reflexively pulls back when it feels your hand.. but you calm it down with gentle touches.")
 
 		saynn("[say=pc]Easy now.[/say]")
@@ -94,8 +93,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "1"):
-		_tentacles.doAnimDuo("idle")
-		
+		playAnimation(StageScene.TentaclesStroke, "stroke", {plant=true})
 		saynn("You catch one of the tentacles with your hands. It gives a startled little twitch, trying to slip free.")
 
 		saynn("[say=pc]Easy. I'm not gonna hurt you.[/say]")
@@ -114,8 +112,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "2"):
-		_tentacles.doAnimDuo("idle")
-		
+		playAnimation(StageScene.TentaclesStroke, "fast", {plant=true})
 		saynn("Your gaze settles on one of the more curious tentacles, its tip swaying gently near your shoulder.")
 
 		saynn("You feel like you wanna do something with it.. And so you lean in and press your lips to its smooth, cool surface. You smooch it!")
@@ -128,8 +125,6 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "3"):
-		playAnimation(StageScene.TentaclesBondage, "start", {plant=true})
-		
 		saynn("You're curious what the tentacles will do to you now.. so you present yourself for them.. completely naked. This is certainly unusual.. but you don't feel any fear.")
 
 		saynn("The tentacles just watch you from a far at first.. but eventually one of them reaches out to brush against your side with a light touch. You don't pull away.. allowing it to do so. Soon, another joins in. Together, they begin a slow, curious exploration.")
@@ -141,12 +136,15 @@ func _run():
 		saynn("The sensations make you moan ever so quietly. The tentacles pulse gently in response, probably feeling encouraged.")
 
 		if (GM.pc.hasReachableVagina()):
+			playAnimation(StageScene.TentaclesGrope, "grope", {plant=true, bodyState={naked=true,hard=true}})
 			saynn("One slick tendril joins and dips lower, following the line of your stomach. It brushes, like a feather, over your pussy.. a teasing touch that makes your breath hitch. It doesn't press further, just rests there for a second, sending warmth throughout your whole body.")
 
 		elif (GM.pc.hasReachablePenis()):
+			playAnimation(StageScene.TentaclesGrope, "stroke", {plant=true, bodyState={naked=true,hard=true}})
 			saynn("One slick tendril joins and dips lower, coiling loosely around your thighs before sliding inward. It grazes, ever so softly, against your {pc.penis}.. a slow, casual stroke along your length that sends warmth throughout your whole body.")
 
 		else:
+			playAnimation(StageScene.TentaclesGrope, "grope", {plant=true, bodyState={naked=true,hard=true}})
 			saynn("One slick tendril joins and dips lower, following the line of your stomach. It brushes, like a feather, over your crotch.. sliding further between your legs until it stumbles upon your {pc.analStretch} tailhole. It doesn't prod it, just leaving a teasing touch that makes your breath hitch.")
 
 		saynn("[say=pc]Ah.. that should be enough for now.[/say]")
@@ -155,8 +153,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "4"):
-		playAnimation(StageScene.TentaclesBondage, "bondage", {plant=true})
-		
+		playAnimation(StageScene.TentaclesBondage, "kneel", {plant=true})
 		saynn("You're feeling a bit kinky and the monster can feel it.")
 
 		saynn("A tentacle, one that's thin and more agile than the rest, reaches up beside you and finds your wrists. Before you can answer, it loops itself gently but firmly around one wrist.. and then the other, pulling them together behind your back.")
@@ -231,6 +228,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "6"):
+		playAnimation(StageScene.TentaclesGangbang, "stroke", {plant=true, bodyState={naked=true, hard=true}})
 		saynn("The tentacles are swaying around you.. and that makes the air thick with some kind of sweet scent. The tendrils are shiny with a thin, slick sheen.")
 
 		saynn("Watching them.. smelling them.. A reckless, hungry impulse takes you. Without a word, you get down to your knees before them.")
@@ -263,6 +261,7 @@ func _run():
 
 		addButton("Orgasm", "See what happens next", "6_cum")
 	if(state == "6_cum"):
+		playAnimation(StageScene.TentaclesGangbang, "inside", {plant=true, bodyState={naked=true, hard=true}})
 		saynn("They don't just cum.. They give you a whole shower.")
 
 		saynn("[say=pc]Mmmph..![/say]")
@@ -279,6 +278,7 @@ func _run():
 
 		addButton("Continue", "See what happens next", "endthescene")
 	if(state == "7"):
+		playAnimation(StageScene.TentaclesDeepthroat, "sex", {plant=true, bodyState={naked=true, hard=true}})
 		saynn("You look at the thick, shiny tentacle swaying before you.. A little bead of juices gathers at its tip and hangs from it for a bit.. before dripping to the floor. A sudden desire heats you up..")
 
 		saynn("[say=pc]Come here.[/say]")
@@ -307,6 +307,7 @@ func _run():
 
 		addButton("Climax", "See what happens next", "7_cum")
 	if(state == "7_cum"):
+		playAnimation(StageScene.TentaclesDeepthroat, "inside", {plant=true, bodyState={naked=true, hard=true}})
 		saynn("As your reflex starts making you gag and choke on it, the tension inside the tentacle begins to rise. The movements become more urgent, less controlled. Then, with a powerful, shuddering thrust, it locks itself deep in your throat.. and begins to pulse hard.")
 
 		saynn("Thick, warm, honey-lick fluid gets pumped directly into your stomach. Each throbbing pulse is a flood of sweet juices, filling you with a spreading, heavy warmth. The tentacle continues to twitch and pump, ensuring every last drop is deposited deep inside you.. until your belly feels full.")

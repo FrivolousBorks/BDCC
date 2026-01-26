@@ -1,6 +1,11 @@
 extends SexActivityBase
 var waitTimer:int = 0
-var altPose:bool = false
+var altPose:int = POSE_CUDDLE
+var shouldShowCumAnim:bool = false
+
+const POSE_CUDDLE = 0
+const POSE_BONDAGE = 1
+const POSE_GROPE = 2
 
 func _init():
 	id = "TentaclesStrokePenis"
@@ -53,7 +58,7 @@ func isActivityImpossibleShouldStop() -> bool:
 	return false
 
 func startActivity(_args):
-	altPose = RNG.chance(50)
+	altPose = RNG.pick([POSE_CUDDLE, POSE_BONDAGE, POSE_GROPE])
 	
 	var exposedThings:Array = []
 	var genitalsText:String = "crotch"
@@ -61,8 +66,8 @@ func startActivity(_args):
 		exposedThings.append(RNG.pick(["dick", "cock", "member"]))
 		if(RNG.chance(50)):
 			exposedThings.append("balls")
-	if(getSub().hasVagina() && getSub().getFirstItemThatCoversBodypart(BodypartSlot.Vagina) == null):
-		exposedThings.append(RNG.pick(["pussy", "pussy", "slit", "kitty"]))
+	#if(getSub().hasVagina() && getSub().getFirstItemThatCoversBodypart(BodypartSlot.Vagina) == null):
+	#	exposedThings.append(RNG.pick(["pussy", "pussy", "slit", "kitty"]))
 	if(exposedThings.size() > 0):
 		genitalsText = "exposed "+Util.humanReadableList(exposedThings)
 	
@@ -70,8 +75,38 @@ func startActivity(_args):
 
 func handjob_processTurn():
 	stimulateStrokePenis(DOM_0, SUB_0, I_NORMAL, SPEED_MEDIUM)
-	strokePenis(DOM_0, SUB_0)
+
+	addText(RNG.pick([
+		"The tentacle strokes {sub.yourHis} {sub.penisShort}.",
+		"The tentacles slides along {sub.yourHis} {sub.penisShort}.",
+		"The tentacle slides along {sub.yourHis} {sub.penisShort} back and forth, stroking it.",
+		"The tentacle rubs the head of {sub.yourHis} {sub.penisShort} in circles.",
+		"The tentacle traces the veins on {sub.yourHis} {sub.penisShort} with its tip.",
+		"The tentacle keeps stroking {sub.yourHis} {sub.penisShort} in a steady, teasing rhythm.",
+	]))
 	
+	if(isCloseToCumming(SUB_0) && RNG.chance(30)):
+		addText(RNG.pick([
+			"{sub.You} {sub.youAre} about to cum!",
+			"{sub.You} {sub.youAre} being kept on edge.",
+			"{sub.You} {sub.penisShort} is twitching and throbbing.",
+			"{sub.You} {sub.penisShort} is leaking pre a lot.",
+			"{sub.You} {sub.youAre} barely keeping {sub.yourself} from cumming.",
+			"{sub.You} reached {sub.yourHis} peak!",
+		]))
+	elif(isReadyToFuck(SUB_0) && RNG.chance(20)):
+		addText(RNG.pick([
+			"{sub.Your} {sub.penisShort} is leaking "+RNG.pick(["pre", "precum", "arousal"])+".",
+			"{sub.YourHis} {sub.penisType}'s tip glistens with fresh pre.",
+			"{sub.Your} {sub.penisType} is so hard, slick with arousal.",
+			"{sub.Your} {sub.penisShort} is pulsing, begging for more touch.",
+			"{sub.Your} shaft is throbbing with need.",
+		]))
+
+
+func processTurn():
+	shouldShowCumAnim = false
+
 #func licking_processTurn():
 #	doPussyLickingTurn(DOM_0, SUB_0)
 
@@ -109,6 +144,7 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 		state = ""
 		addText("The tentacles pause the action.")
 	if(_id == "subcum"):
+		shouldShowCumAnim = true
 		satisfyGoals()
 		cumGeneric(SUB_0, DOM_0)
 		state = ""
@@ -136,24 +172,6 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 		stimulate(DOM_0, S_MOUTH, SUB_0, S_PENIS, I_TEASE, Fetish.OralSexGiving, SPEED_SLOW)
 		react(SexReaction.AboutToHandjobSub)
 		return
-	if(_id == "startpussylick"):
-		setState("licking")
-		var clothingItem = getSub().getFirstItemThatCoversBodypart(BodypartSlot.Vagina)
-		var throughTheClothing = ""
-		if(clothingItem != null):
-			throughTheClothing = " through the "+clothingItem.getCasualName()
-		
-		var text = RNG.pick([
-			"{dom.You} {dom.youVerb('stick')} {dom.yourHis} tongue out and {dom.youVerb('press', 'presses')} it against {sub.your} "+RNG.pick(["pussy", "slit", "petals", "folds"])+" before proceeding to lick {sub.youHim} out"+throughTheClothing+".",
-		])
-		
-		stimulateLick(DOM_0, SUB_0, S_VAGINA, I_TEASE, SPEED_SLOW)
-		#getSubInfo().addLust(10.0 + getSubInfo().fetishScore({Fetish.OralSexReceiving: 5.0}))
-		#getSubInfo().addArousalForeplay(0.05)
-		#affectSub(getSubInfo().fetishScore({Fetish.OralSexReceiving: 1.0}), 0.0, -0.3, -0.01)
-		addText(text)
-		react(SexReaction.AboutToLickPussy)
-		return
 
 	if(_id == "stop"):
 		endActivity()
@@ -171,17 +189,6 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 			
 		addText("The tentacle pulls away from {sub.yourHis} "+genitalsText+".")
 
-	if(_id == "warndom"):
-		if(state == "handjob"):
-			setState("subabouttocumHandjob")
-		elif(getState() in ["licking", "tonguefucking"]):
-			setState("subabouttocum")
-		else:
-			setState("subabouttocumcock")
-		addText("{sub.You} {sub.youVerb('warn')} {dom.youHim} that {sub.youHe} {sub.youAre} "+RNG.pick(["about to cum", "close", "very close"])+".")
-		getDomInfo().addAnger(-0.05)
-		reactSub(SexReaction.WarnAboutToCum)
-		return
 	if(_id == "pullaway"):
 		var successChance:float = getResistChance(SUB_0, DOM_0, RESIST_ORAL_FOCUS, 30.0, 25.0)
 		if(RNG.chance(successChance)):
@@ -237,12 +244,21 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 
 
 func getAnimation():
-	if(altPose):
+	if(altPose == POSE_GROPE):
+		if(state == "handjob" || state == "subabouttocumHandjob"):
+			if(isCloseToCumming(SUB_0)):
+				return [StageScene.TentaclesGrope, "strokefast", {pc=SUB_0, bodyState={hard=true}}]
+			return [StageScene.TentaclesGrope, "stroke", {pc=SUB_0, bodyState={hard=true}}]
+		if(shouldShowCumAnim):
+			return [StageScene.TentaclesGrope, "cum", {pc=SUB_0, bodyState={hard=true}}]
+		return [StageScene.TentaclesGrope, "tease", {pc=SUB_0}]
+	elif(altPose == POSE_BONDAGE):
 		if(state == "handjob" || state == "subabouttocumHandjob"):
 			if(isCloseToCumming(SUB_0)):
 				return [StageScene.TentaclesBondage, "strokefast", {pc=SUB_0, bodyState={hard=true}}]
 			return [StageScene.TentaclesBondage, "stroke", {pc=SUB_0, bodyState={hard=true}}]
 		return [StageScene.TentaclesBondage, "tease", {pc=SUB_0}]
+		
 	if(state == "handjob" || state == "subabouttocumHandjob"):
 		if(isCloseToCumming(SUB_0)):
 			return [StageScene.TentaclesCuddle, "strokefast", {pc=SUB_0, bodyState={hard=true}}]
@@ -266,4 +282,4 @@ func loadData(data):
 	.loadData(data)
 	
 	waitTimer = SAVE.loadVar(data, "waitTimer", 0)
-	altPose = SAVE.loadVar(data, "altPose", false)
+	altPose = SAVE.loadVar(data, "altPose", POSE_CUDDLE)

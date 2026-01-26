@@ -32,9 +32,13 @@ func getDefaultAnimation():
 			return [StageScene.Sleeping, "sleep", {pc=theSubIDs[0]}]
 		return [StageScene.GivingBirth, "idle", {pc=theSubIDs[0]}]
 
+	#if(isUnconscious(theSubIDs[0])):
+	#	return [StageScene.TentaclesSleepOn, "sleep", {pc=theSubIDs[0]}]
+	#return [StageScene.TentaclesTease, "tease", {pc=theSubIDs[0]}]
+
 	if(isUnconscious(theSubIDs[0])):
-		return [StageScene.TentaclesSleepOn, "sleep", {pc=theSubIDs[0]}]
-	return [StageScene.TentaclesTease, "tease", {pc=theSubIDs[0]}]
+		return [StageScene.TentaclesGangbang, "teasedef", {pc=theSubIDs[0]}]
+	return [StageScene.TentaclesGangbang, "tease", {pc=theSubIDs[0]}]
 
 func processAnimationArgs(_args:Dictionary):
 	if(tentacleType == TentacleEggType.Plant):
