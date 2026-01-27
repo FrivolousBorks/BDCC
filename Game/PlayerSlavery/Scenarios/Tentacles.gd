@@ -99,7 +99,8 @@ var agility:int = 0
 var mind:int = 0
 var lust:int = 0
  
-var monsterName:String = "tentacles"
+const DEFAULT_MONSTER_NAME = "Tentacles"
+var monsterName:String = ""
 const MONSTER_NAMES = [
 	"Tentacles",
 	"Monster",
@@ -154,7 +155,7 @@ func getText(_loc:String) -> String:
 		Ar.append("lust: "+str(lust))
 	
 	if(_loc == LOC_IMPORTANT):
-		Ar.append("Test test TEST TEST")
+		Ar.append("Test test TEST TEST") #TODO: REMOVE BEFORE SHIP
 	
 	return Util.join(Ar, "\n")
 
@@ -511,6 +512,8 @@ func addMonsterNameButtons(_scene:SceneBase):
 func setMonsterName(_n:String):
 	monsterName = _n
 func getMonsterName() -> String:
+	if(monsterName.empty()):
+		return DEFAULT_MONSTER_NAME
 	return monsterName
 
 func getBiggestStat() -> int:
