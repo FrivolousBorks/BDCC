@@ -73,6 +73,8 @@ func _run():
 				addButton("Stroke them!", "Stroke the tentacles like a slut and see what happens!", "6")
 			if (_tentacles.lust >= 5):
 				addButton("Deep kiss", "Kiss one of the tentacles and let it stretch your throat a bit..", "7")
+			if (_tentacles.lust >= 5 && _tentacles.isNormal()):
+				addButton("Submit", "(Sex) Let the tentacles do whatever they want with you!", "8")
 		addButton("Shoo!", "Tell the tentacles to stop", "say_shoo")
 	if(state == "say_shoo"):
 		playAnimation(StageScene.Solo, "stand")
@@ -321,6 +323,28 @@ func _run():
 		saynn("That was something..")
 
 		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "8"):
+		_tentacles.doAnimDuo("glare", {npcAction="kneel"})
+		saynn("You decide to present yourself to {psTentacles}, submitting to their will completely.")
+
+		saynn("Time to see what they will do to you..")
+
+		addButton("Continue", "See what happens next", "8_startSex")
+	if(state == "8_after"):
+		saynn("You had fun with the tentacles..")
+
+		saynn("They've certainly only gotten more lusty after this.")
+
+		addButton("Continue", "See what happens next", "endthescene")
+	if(state == "8_afterEgged"):
+		playAnimation(StageScene.TFLook, "start")
+		saynn("You had fun with the tentacles..")
+
+		saynn("And now, when you look down, you can't help but to notice your belly being quite round.")
+
+		saynn("It looks like you got stuffed with eggs! You can feel them shifting inside you slightly as you move..")
+
+		addButton("Continue", "See what happens next", "endthescene")
 
 func _react(_action: String, _args):
 	var _tentacles:PlayerSlaveryTentacles = GM.main.PS
@@ -358,9 +382,31 @@ func _react(_action: String, _args):
 		_tentacles.trainNothing()
 
 	if(_action == "6_cum"):
-		GM.pc.orgasmFrom("pc") #TODO: Put cum here
+		GM.pc.orgasmFrom("pc")
+		var tentID:String = _tentacles.getTentaclesCharID()
+		getCharacter(tentID).fillBalls(RNG.randf_range(0.2, 0.5))
+		GM.pc.cummedOnBy(tentID, FluidSource.Penis)
+		getCharacter(tentID).fillBalls(RNG.randf_range(0.2, 0.5))
+		GM.pc.cummedInMouthBy(tentID, FluidSource.Penis)
 
 	if(_action == "7_cum"):
-		pass #TODO: CUM HERE
+		var tentID:String = _tentacles.getTentaclesCharID()
+		getCharacter(tentID).fillBalls(RNG.randf_range(0.2, 0.5))
+		GM.pc.cummedInMouthBy(tentID, FluidSource.Penis)
+
+	if(_action == "8_startSex"):
+		_tentacles.prepareForSex()
+		runScene("GenericSexScene", [_tentacles.getTentaclesCharID(), "pc", SexType.TentaclesSex, {}], "tentaclesSex")
+		return
 
 	setState(_action)
+
+func _react_scene_end(_tag, _result):
+	if(_tag == "tentaclesSex"):
+		var _tentacles:PlayerSlaveryTentacles = GM.main.PS
+		_tentacles.train(_tentacles.STAT_LUST)
+		if(!_tentacles.noticedEgged && GM.pc.isEggStuffedBy(_tentacles.getTentaclesCharID())):
+			setState("8_afterEgged")
+			_tentacles.noticedEgged = true
+		else:
+			setState("8_after")

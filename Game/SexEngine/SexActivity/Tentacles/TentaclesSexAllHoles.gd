@@ -284,7 +284,7 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 		stimulateSex(DOM_0, SUB_0, S_MOUTH, I_TEASE, SPEED_VERYSLOW)
 		return
 	if(_id == "penetrate"):
-		var didPenetrate:bool = RNG.chance(30)
+		var didPenetrate:bool = RNG.chance(40)
 		
 		if(getSub().hasReachableVagina()):
 			penetration(didPenetrate, DOM_0, SUB_0, S_VAGINA)

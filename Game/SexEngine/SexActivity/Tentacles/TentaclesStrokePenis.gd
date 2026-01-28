@@ -105,7 +105,8 @@ func handjob_processTurn():
 
 
 func processTurn():
-	shouldShowCumAnim = false
+	#shouldShowCumAnim = false
+	pass
 
 #func licking_processTurn():
 #	doPussyLickingTurn(DOM_0, SUB_0)
@@ -129,7 +130,7 @@ func getActions(_indx:int):
 		if(getState() != ""):
 			addAction("pause", getPauseSexScore(DOM_0, SUB_0, S_PENIS, S_HANDS), "Pause", "Pause the stroking")
 		
-		addAction("stop", getStopScore(), "Stop sex", "Stop the sex activity")
+		addAction("stop", getStopScore() - (10.0 if shouldShowCumAnim else 0.0), "Stop sex", "Stop the sex activity")
 	
 	if(_indx == SUB_0):
 		addAction("pullaway", getResistScore(SUB_0), "Pull away", "Try to pull away", {A_CHANCE: getResistChance(SUB_0, DOM_0, RESIST_ORAL_FOCUS, 30.0, 25.0)})
@@ -244,12 +245,16 @@ func doAction(_indx:int, _id:String, _action:Dictionary):
 
 
 func getAnimation():
+	if(shouldShowCumAnim):
+		set_deferred("shouldShowCumAnim", false)
+		
 	if(altPose == POSE_GROPE):
 		if(state == "handjob" || state == "subabouttocumHandjob"):
 			if(isCloseToCumming(SUB_0)):
 				return [StageScene.TentaclesGrope, "strokefast", {pc=SUB_0, bodyState={hard=true}}]
 			return [StageScene.TentaclesGrope, "stroke", {pc=SUB_0, bodyState={hard=true}}]
 		if(shouldShowCumAnim):
+			#set_deferred("shouldShowCumAnim", false)
 			return [StageScene.TentaclesGrope, "cum", {pc=SUB_0, bodyState={hard=true}}]
 		return [StageScene.TentaclesGrope, "tease", {pc=SUB_0}]
 	elif(altPose == POSE_BONDAGE):

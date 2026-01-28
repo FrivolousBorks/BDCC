@@ -24,6 +24,7 @@ func _run():
 	var _tentacles:PlayerSlaveryTentacles = GM.main.PS
 
 	if(state == ""):
+		_tentacles.doAnimDuo("idle")
 		saynn("The tentacle monster has stopped in the corner where all the toys and puzzles are..")
 
 		saynn("It looks like it might wanna play or something.")

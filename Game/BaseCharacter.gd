@@ -1367,6 +1367,11 @@ func hasEggsIn(_slot:String, _onlyTentacle:bool = false) -> bool:
 		return false
 	return menstrualCycle.hasEggsInOrifice(theOrifice, _onlyTentacle)
 
+func isEggStuffedBy(_charID:String) -> bool:
+	if(!menstrualCycle):
+		return false
+	return menstrualCycle.isEggStuffedBy(_charID)
+
 func isVisiblyEggStuffed() -> bool:
 	if(menstrualCycle != null):
 		return menstrualCycle.isVisiblyEggStuffed()

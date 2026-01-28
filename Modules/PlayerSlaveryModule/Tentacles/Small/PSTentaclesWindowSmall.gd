@@ -24,6 +24,7 @@ func _reactInit():
 	
 	if(possible.size() > 0):
 		setState(RNG.pick(possible))
+	_tentacles.doAnimDuo("idle")
 
 func resolveCustomCharacterName(_charID):
 	if(_charID == "ten"):

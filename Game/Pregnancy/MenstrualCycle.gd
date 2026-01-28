@@ -293,6 +293,12 @@ func isEggStuffed() -> bool:
 func isPregnant() -> bool:
 	return !impregnatedEggCells.empty()
 
+func isEggStuffedBy(_charID:String) -> bool:
+	for egg in bigEggs:
+		if(egg.getFatherID() == _charID || egg.getMotherID() == _charID):
+			return true
+	return false
+
 func isPregnantFromPlayer() -> bool:
 	if(!isPregnant()):
 		return false

@@ -4,10 +4,32 @@ func _init():
 	id = "psplantTentacles"
 	disableSerialization = true
 	
+	npcDefaultFetishInterest = FetishInterest.Neutral
+	npcPersonality = {
+		PersonalityStat.Brat: 0.0,
+		PersonalityStat.Mean: 0.0,
+		PersonalityStat.Subby: 0.0,
+		PersonalityStat.Impatient: 0.0,
+		PersonalityStat.Naive: 0.0,
+		PersonalityStat.Coward: 0.0,
+	}
+	npcFetishes = {
+		Fetish.VaginalSexGiving : FetishInterest.Likes,
+		Fetish.AnalSexGiving : FetishInterest.Likes,
+		Fetish.Exhibitionism : FetishInterest.Likes,
+		Fetish.OralSexGiving : FetishInterest.Likes,
+		Fetish.OralSexReceiving : FetishInterest.Likes,
+		Fetish.Breeding : FetishInterest.Likes,
+		
+		Fetish.Choking : FetishInterest.Likes, # Optional ?
+		Fetish.Sadism : FetishInterest.Likes, # Optional ?
+		Fetish.UnconsciousSex : FetishInterest.Likes, # Optional?
+	}
+	
 func _getName():
 	if(GM.main != null):
 		if(GM.main.PS && GM.main.PS.id == "Tentacles"):
-		 return GM.main.PS.id
+		 return GM.main.PS.getMonsterName()
 	return "Plant Tentacles"
 
 func getGender():
@@ -37,6 +59,12 @@ func getBaseVirility() -> float:
 
 func createBodyparts():
 	var penis = GlobalRegistry.createBodypart("humanpenis")
-	penis.lengthCM = 25
+	penis.lengthCM = 22
 	penis.ballsScale = 1
 	giveBodypartUnlessSame(penis)
+
+func getCustomAttribute(id):
+	if(id == BuffAttribute.OverstimulationThresholdAll):
+		return 100.0
+	
+	return .getCustomAttribute(id)
