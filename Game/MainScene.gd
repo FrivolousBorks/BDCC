@@ -423,7 +423,7 @@ func loadingSavefileFinished():
 	applyAllWorldEdits()
 	GM.world.addTransitions()
 	GM.world.resetCamera()
-	GM.pc.checkLocation()
+	GM.pc.checkLocation(true)
 	
 	if(!rollbacker.rollbacking):
 		WHS.clearHistory()
