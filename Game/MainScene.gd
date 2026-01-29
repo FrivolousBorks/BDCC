@@ -422,6 +422,8 @@ func loadingSavefileFinished():
 	
 	applyAllWorldEdits()
 	GM.world.addTransitions()
+	GM.world.resetCamera()
+	GM.pc.checkLocation()
 	
 	if(!rollbacker.rollbacking):
 		WHS.clearHistory()
@@ -602,8 +604,6 @@ func loadData(data):
 	GM.world.loadData(SAVE.loadVar(data, "world", {}))
 	#GM.world.updatePawns(IS)
 	#GM.world.setPawnsShowed(canShowPawns())
-
-	GM.pc.checkLocation()
 
 func saveCharactersData():
 	var data = {}
